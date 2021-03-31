@@ -1,0 +1,66 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <h:outputStylesheet library="css" name="dashboard.css"/>
+
+    <h:panelGroup layout="block" class="content-header">
+        <div class="header">#{global['my.account']}</div>
+    </h:panelGroup>
+
+    <!--USER DATA-->
+    <h:form id="userDataForm" class="flex-form-2">
+        <!--HEADER-->
+        <h:panelGroup class="form-header">
+            <h:panelGroup class="form-header-title">
+                #{global['personal.data']}
+            </h:panelGroup>
+            
+            <h:panelGroup class="form-header-actions">
+                <h:commandLink action="#{myAccountView.setEditPersonalData(true)}"
+                    class="svg-icon-button" title="#{global['edit']} #{global['personal.data']}">
+                    <f:ajax render="userDataForm"/>
+                    <h:graphicImage library="images" name="icons/edit.svg" width="11"/>
+                </h:commandLink>
+            </h:panelGroup>
+        </h:panelGroup>
+        
+        <!--INPUTS-->
+        <h:panelGroup class="form-wrapper">
+            <h:panelGroup class="form-flex-panel" style="background-color: transparent;">
+                <h:outputText value="#{myAccountView.appUser.username}" class="strong-label wide" style="margin-bottom: 10px;"/><!-- read-only username -->
+                <h:panelGroup>
+                    <h:outputLabel for="name" value="#{global['name']}" class="form-label"/>
+                    <h:inputText id="name" readonly="#{!myAccountView.editPersonalData}" value="#{myAccountView.appUser.name}" class="input" required="true" requiredMessage="#{global['validation.error.required']}"/>
+                    <h:message for="name" errorClass="error-msg" style="display: block; width: 100%;"/>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:outputLabel value="#{global['birthday']}" for="birthday" class="form-label"/>
+                    <h:inputText pt:type="date" id="birthday" readonly="#{!myAccountView.editPersonalData}" value="#{myAccountView.appUser.birthday}" class="input" required="true" requiredMessage="#{global['validation.error.required']}" converter="LocalDateConverter"/>
+                    <h:message for="birthday" errorClass="error-msg" style="display: block; width: 100%;"/>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:outputLabel value="#{global['phone.number']}" for="phoneNumber" class="label"/>
+                    <h:inputText id="phoneNumber" readonly="#{!myAccountView.editPersonalData}" value="#{myAccountView.appUser.phoneNumber}" class="input" required="true" requiredMessage="#{global['validation.error.required']}"/>
+                    <h:message for="phoneNumber" errorClass="error-msg"/>
+                </h:panelGroup>
+                <script type="text/javascript">
+                    maskPhone('userDataForm:phoneNumber');
+                </script>
+            </h:panelGroup>
+            
+            <h:panelGroup class="form-bottom-controls-row" rendered="#{myAccountView.editPersonalData}">
+                <h:commandLink action="#{myAccountView.setEditPersonalData(false)}" value="#{global['cancel']}" class="form-action-button">
+                    <f:ajax render="userDataForm"/>
+                </h:commandLink>
+                <h:commandLink action="#{myAccountView.saveUserData()}" value="#{global['save']}" class="form-action-button">
+                    <f:ajax execute="userDataForm" render="userDataForm messages"/>
+                </h:commandLink>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,426 @@
+html {height: 100%}
+body {
+    --app-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --primary-color: #2196F3;
+    --main-border-radius: 3px;
+    --image-links-size: 30px;
+
+    /*LIGHT THEME*/
+    --light-theme-bg-color: #cccccc;
+    --light-theme-themed-text-color: var(--primary-color);
+    --light-theme-plain-text-color: black;
+    --light-theme-border-color: #aaaaaa;
+    
+    --light-theme-button-bg: var(--primary-color);
+    --light-theme-button-border-color: #7096ab;
+    --light-theme-button-hover-border-color: #7096ab;
+    --light-theme-button-hover-bg: #45a1cb;
+    --light-theme-button-hover-box-shadow-color: #4581af;
+    --light-theme-button-active-bg: #aaaaaa;
+    
+    --light-theme-input-bg-color: #dddddd;
+    --light-theme-contrast-color: #bbbbbb;
+    
+    --light-theme-list-item-card-background: #bbbbbb;
+    --light-theme-list-item-card-shadow: #aaaaaa;
+
+    /*DARK THEME*/
+    --dark-theme-bg-color: #333333;
+    --dark-theme-themed-text-color: var(--primary-color);
+    --dark-theme-plain-text-color: #888888;
+    --dark-theme-border-color: #555555;
+    
+    --dark-theme-button-bg: var(--primary-color);
+    --dark-theme-button-border-color: #7096ab;
+    --dark-theme-button-hover-border-color: #7096ab;
+    --dark-theme-button-hover-bg: #40a1FB;
+    --dark-theme-button-hover-box-shadow-color: #7575aa;
+    --dark-theme-button-active-bg: #aaaaaa;
+    
+    --dark-theme-input-bg-color: #555555;
+    --dark-theme-contrast-color: #444444;
+    
+    --dark-theme-list-item-card-background: #444444;
+    --dark-theme-list-item-card-shadow: #999999;
+    
+    /*BINDINGS (NÃO MEXA) - essas são as variáveis usadas nos estilos. Para alterar valores, altere os temas acima*/
+    --main-bg-color: var(--light-theme-bg-color);
+    --main-plain-text-color: var(--light-theme-plain-text-color);
+    --main-themed-text-color: var(--light-theme-themed-text-color);
+    --main-border-color: var(--light-theme-border-color);
+    --main-button-bg: var(--light-theme-button-bg);
+    --main-button-border-color: var(--light-theme-border-color);
+    --main-button-hover-border-color: var(--light-theme-button-hover-border-color);
+    --main-button-hover-bg: var(--light-theme-button-hover-bg);
+    --main-button-hover-shadow-color: var(--light-theme-button-hover-box-shadow-color);
+    --main-button-active-bg: var(--light-theme-button-active-bg);
+    --main-input-bg-color: var(--light-theme-input-bg-color);
+    --main-contrast-color: var(--light-theme-contrast-color);
+    --main-stylish-border-color: var(--primary-color);
+    
+    --list-item-card-background: var(--light-theme-list-item-card-background);
+    --list-item-card-shadow: var(--light-theme-list-item-card-shadow);
+    
+    min-height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    
+    font-family: var(--app-font-family);
+    background-color: var(--main-bg-color);
+    color: var(--main-plain-text-color);
+
+}
+
+/*Dark Mode Config TODO HERE*/
+@media (prefers-color-scheme: dark) {
+    body {
+        --main-bg-color: var(--dark-theme-bg-color);
+        --main-plain-text-color: var(--dark-theme-plain-text-color);
+        --main-themed-text-color: var(--dark-theme-themed-text-color);
+        --main-border-color: var(--dark-theme-border-color);
+        --main-button-bg: var(--dark-theme-button-bg);
+        --main-button-border-color: transparent;
+        --main-button-hover-border-color: var(--dark-theme-button-hover-border-color);
+        --main-button-hover-bg: var(--dark-theme-button-hover-bg);
+        --main-button-hover-shadow-color: var(--dark-theme-button-hover-box-shadow-color);
+        --main-button-active-bg: var(--dark-theme-button-active-bg);
+        --main-input-bg-color: var(--dark-theme-input-bg-color);
+        --main-contrast-color: var(--dark-theme-contrast-color);
+        
+        --list-item-card-background: var(--dark-theme-list-item-card-background);
+        --list-item-card-shadow: var(--dark-theme-list-item-card-shadow);
+    }
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) white;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  border: 3px solid white;
+}
+
+select{
+    background-color: var(--main-input-bg-color);
+    border: var(--main-contrast-color) 1px solid;
+    border-radius: var(--main-border-radius);
+    padding: 3px;
+}
+select:focus{
+    outline: none;
+}
+
+.input{
+    background-color: var(--main-input-bg-color);
+    border: var(--main-contrast-color) 1px solid;
+    border-radius: var(--main-border-radius);
+    caret-color: var(--primary-color);    
+    padding: 3px;
+    width: -webkit-fill-available;
+    width: -moz-available;
+}
+.input:focus{
+    outline: none;
+}
+.input[readonly] {
+    background-color: var(--main-bg-color);
+    color: var(--main-plain-text-color);
+}
+
+.button{
+    cursor: pointer;
+    padding: 4px 10px;
+    /*background: var(--main-button-bg);*/
+    background-color: var(--main-button-bg);
+    border: 0;
+    border-radius: var(--main-border-radius);    
+}
+
+.button:hover{
+    background: var(--main-button-hover-bg);
+    box-shadow: 0 0 8px var(--main-button-hover-shadow-color);    
+}
+
+.button:active{
+    background: var(--main-button-active-bg);
+    box-shadow: 0 0 8px var(--main-button-hover-shadow-color);
+    outline: none;    
+}
+.button:focus{
+    outline: none;
+}
+
+.alt-button{
+    cursor: pointer;
+    padding: 4px 10px;
+    background: var(--main-input-bg-color);
+    border: 0;
+    border-radius: var(--main-border-radius);    
+}
+
+a {
+    padding: .5em;
+    text-decoration: none;
+    color: var(--main-themed-text-color);
+}
+a:hover{
+    text-decoration: underline var(--main-themed-text-color);
+}
+
+.content{
+}
+
+.content-header{
+    font-size: 1.5em;
+    color: var(--main-plain-text-color);
+    width: 100%;
+}
+
+footer{
+    background-color: var(--main-bg-color);
+    text-align: center;
+    width: 100%;
+    margin-top: 50px;
+    display: grid;
+    align-content: flex-end;
+    position: absolute;
+    bottom: 0;
+}
+
+.slider-img{
+    width: 100%;
+}
+.tiny-text{
+    font-size: .7em;
+}
+.fake-link{
+    color: var(--primary-color);
+    cursor: pointer;
+}
+.fake-link:hover{
+    text-decoration: underline;
+}
+a.tiny-link{
+    padding: 0;
+    font-size: 12px;
+}
+/*FORMS*/
+.form-group{
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.label{
+    margin-right: 10px;
+}
+.badge-container{
+}
+.badge{
+    background-color: var(--primary-color);
+    color: white;
+    border: 0;
+    border-radius: 15px;
+    position: absolute;
+    transform: translate(-15px, -2px);
+    font-size: 0.7em;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: lighter;
+}
+.badge-data{
+    transform: translate(0px,-1px);
+}
+
+/***********/
+/*MENSAGENS*/
+/***********/
+.info-msg{ 
+    color: green; 
+}
+.warn-msg{ 
+    color: yellow;
+}
+.error-msg{ 
+    color: red; 
+}
+ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.floatingError{
+    padding: 10px;
+    border: 0;
+    border-radius: var(--main-border-radius);
+    background-color: #ff9999;
+    color: black;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+.floatingWarn{
+    padding: 10px;
+    border: 0;
+    border-radius: var(--main-border-radius);
+    background-color: #CCCC34;
+    color: black;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+.floatingInfo{
+    padding: 10px;
+    border: 0;
+    border-radius: var(--main-border-radius);
+    background-color: #99ff99;
+    color: black;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+/*IMAGE VISUALIZERS*/
+.thumbnails-panel{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.thumbnail-container{
+    display: grid;
+    margin: 1.5px 3px;
+}
+.thumb-visualizer{
+    display: none;
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background-color: white;
+    margin-top: -250px;
+    align-items: center;
+}
+.image-view{
+    width: 100%;
+}
+.photo-card{
+    background-color: #999999;
+    text-align: right;
+}
+.photo-card-header{
+
+}
+.photo-card-action{
+    padding: 0 2px;
+    width: fit-content;
+}
+.photo-card-viewport{
+    width: 40px;
+    height: 40px;
+    display: table-cell;
+    vertical-align: middle;
+    background-color: white;
+}
+img.tiny-thumb{
+    margin: 0 3px;
+    background-color: white;
+}
+
+.disabled-link{
+    pointer-events: none;
+}
+
+.wide-button{
+    width: 100%;
+}
+
+.strong-label{
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+/* SIDE MENU SIDE PANEL CUSTOM CONTENT*/
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.sidemenu-toggle-icon-bars{
+    width: 30px;
+    height: .26em;
+    background-color: black;
+    margin: .28em 0em .3em 0em;
+}
+.sidemenu-content{
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+}
+.sidemenu-section{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.sidemenu-title{
+    display: inherit;
+    width: 100%;
+}
+.sidemenu-option{
+    display: inherit;
+    width: 100%;
+    margin-left: 20px;
+}
+a.sidemenu-option{
+    padding: 0;
+}
+.sidemenu-sub-option{
+    margin-left: 40px;
+    font-size: .75em;
+    width: 100%;
+    display: inherit;
+}
+a.sidemenu-sub-option{
+    padding: 0;
+}
+
+.loader-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.loader {
+    border: 3px solid var(--main-input-bg-color);
+    border-top: 3px solid var(--primary-color); /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+.loader-message{
+    width: 100%;
+    text-align: center;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media screen and (min-width: 478px) {
+}
+
+@media screen and (min-width: 720px) {
+}
+        
+@media screen and (min-width: 1024px) {
+}

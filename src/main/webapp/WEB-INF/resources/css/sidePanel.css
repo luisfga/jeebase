@@ -1,0 +1,38 @@
+.lu-sidePanelOverlay{
+    --overlay-bg-color: rgba(0,0,0,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    display: flex;
+    background-color: var(--overlay-bg-color);
+    z-index: 2;
+}
+
+.lu-sidePanel{
+    --width-transition: width 750ms ease-in-out;
+    --sidepanel-bg-color: #cccccc;
+    background-color: var(--sidepanel-bg-color);
+    transition: var(--width-transition);
+    width: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    justify-content: center;
+    display: flex;
+}
+.lu-sidePanelContent{
+    --opacity-transition: opacity 250ms;
+    --content-margin: 50px 20px;
+    opacity: 0;
+    transition: var(--opacity-transition);
+    margin: var(--content-margin);
+    width: 100%;
+    display: flex;
+}
+.lu-sidePanelContentAddition{
+    background-color: #555555;
+    margin-top: 20px;
+}

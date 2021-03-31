@@ -1,0 +1,85 @@
+.modal{
+    
+}
+.modal-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    z-index: 102;
+    display: block;
+    pointer-events: all;
+}
+
+.modal-window{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--main-bg-color);
+    border: var(--primary-color) 1px solid;
+    position: fixed;
+    display: grid;
+    padding: 15px 30px 30px 30px;
+    width: fit-content;
+    max-width: 80%;
+    justify-items: center;
+}
+.modal-title{
+}
+.modal-message{
+    padding: 10px 0px;
+    width: fit-content;
+}
+.modal-form{
+    width: 100%;
+}
+.modal-content{
+    display: grid;
+}
+.modal-options{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+}
+.modal-button{
+    margin: 0 30px;
+    cursor: pointer;
+    padding: 4px 10px; 
+    background-color: var(--main-button-bg);
+    border: 0;
+    border-radius: var(--main-border-radius);
+    width: 30%;
+}
+.modal-button:hover{
+    background: var(--main-button-hover-bg);
+    box-shadow: 0 0 8px var(--main-button-hover-shadow-color);
+}
+.modal-button:active{
+    background: var(--main-button-active-bg);
+    box-shadow: 0 0 8px var(--main-button-hover-shadow-color);
+    outline: none;
+}
+.modal-button:focus{
+    outline: none;
+}
+
+@media screen and (min-width: 620px) {
+    .modal-window{
+        max-width: 60%;
+    }
+}
+
+@media screen and (min-width: 820px) {
+    .modal-window{
+        max-width: 40%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .modal-window{
+        max-width: 30%;
+    }
+}

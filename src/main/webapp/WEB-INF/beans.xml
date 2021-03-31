@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+       bean-discovery-mode="annotated">
+    
+    <alternatives>
+        <!--To use JTA injecting EntityManagerFactory-->
+        <!--<class>org.apache.deltaspike.jpa.impl.transaction.BeanManagedUserTransactionStrategy</class>-->
+        
+        <!--To use JTA injecting EntityManager and leting the container take care of the rest-->
+        <class>org.apache.deltaspike.jpa.impl.transaction.ContainerManagedTransactionStrategy</class>
+        
+        <!--to user with multiple persistence units and both RESOURCE_LOCAL and JTA-->
+        <!--<class>org.apache.deltaspike.jpa.impl.transaction.EnvironmentAwareTransactionStrategy</class>-->
+    </alternatives>
+    
+</beans>

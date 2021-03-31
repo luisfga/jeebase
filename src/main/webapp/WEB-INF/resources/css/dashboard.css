@@ -1,0 +1,285 @@
+.content{
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.header{
+    margin-bottom: 20px;
+}
+
+/*XXXXXXXXXXXXX*/
+/* FORM HEADER */
+/*XXXXXXXXXXXXX*/
+.form {
+    margin-bottom: 20px;
+    width: 100%;
+}
+/*for width-varying sections*/
+.flex-form {
+    margin-bottom: 20px;
+    width: 100%;
+}
+.vertical-separator{
+    width: 0;
+}
+.vertical-separator-2{
+    width: 0;
+}
+.form-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--main-contrast-color);
+    margin-bottom: 5px;
+}
+.form-header-title{
+    font-weight: bold;
+    color: var(--main-themed-text-color);
+    font-size: 1.25em;
+    margin-left: 5px;
+    width: 70%;
+}
+.form-header-actions{
+    text-align: end;
+    width: 30%;
+}
+.svg-icon-button{
+    padding: 2px;
+    margin: 0 5px;
+}
+
+.counter{
+    font-size: .75em;
+    font-weight: normal;
+    color: var(--main-plain-text-color);
+}
+.paginator{
+    font-size: .75em;
+    font-weight: normal;
+    color: var(--main-plain-text-color);
+}
+
+.paginator-control{
+    background-color: var(--main-contrast-color);
+}
+.paginator-control{
+    padding: 2px;
+    line-height: 0;
+    height: fit-content;
+}
+.paginator-control:hover{
+    text-decoration: none;
+}
+.filter-info{
+    margin-bottom: 5px;
+    display: flex;
+    font-style: italic;
+}
+
+/*XXXXXXXXXXXXX*/
+/* FORM INPUTS */
+/*XXXXXXXXXXXXX*/
+.form-wrapper{
+    display: grid;
+    margin-bottom: 5px;
+}
+
+.form-flex-panel{
+    padding: 10px;
+    border: var(--main-border-color) 1px solid;
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--main-contrast-color);
+}
+
+.form-controls-row{
+    text-align: right;
+    background: var(--main-contrast-color);
+    padding: 2px;
+}
+.form-bottom-controls-row{
+    text-align: center;
+    background: var(--main-contrast-color);
+    padding: 2px;
+}
+.form-control{
+    background-color: var(--main-input-bg-color);
+    border-radius: 45px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0 4px 1px 4px;
+}
+.form-control:hover{
+    text-decoration: none;
+}
+
+.form-action-button{
+    background-color: var(--main-input-bg-color);
+    border-radius: 45px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0 10px 1px 10px;
+    margin: 5px;
+}
+.form-action-button:hover{
+    text-decoration: none;
+}
+
+
+.form-input-group{
+    display: grid;
+    margin: 0;
+    width: min-content;
+    height: fit-content;
+    align-self: flex-end;
+}
+.wide{
+    width: -webkit-fill-available;
+    width: -moz-available;    
+}
+.half{
+    width: 50%;
+}
+
+fieldset{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    border: var(--main-border-color) 1px solid;
+}
+
+.form-label{
+}
+.form-input{
+    width: min-content;
+}
+.form-input-group-spacer{
+    height: 5px;
+}
+
+label.input-file-mask-label {
+    padding: 0;
+    margin: 0 10px 0 0;
+    color: var(--main-themed-text-color);
+    cursor: pointer;
+}
+label.input-file-mask-label:hover{
+    text-decoration: underline;
+}
+.form-input-file{
+    display: none;
+}
+img.section-form-img-preview{
+    width: 70px;
+}
+/*XXXXXXXXXXXXXX*/
+/*SECTION TABLES*/
+/*XXXXXXXXXXXXXX*/
+.section-table{
+    width: 100%;
+}
+.section-table-row{
+    width: 100%;
+}
+.section-table-row:hover{
+    background-color: var(--main-contrast-color);
+}
+.section-table-item-name{
+    text-align: left;
+}
+.section-table-item-actions{
+    text-align: right;
+}
+.section-table-item-action{
+    margin: 0 5px;
+    padding: 0;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+.section-table-item-action:hover{
+    text-decoration: none;
+}
+
+/*XXXXXXXXXXXXXXX*/
+/*MY ACCOUNT only*/
+/*XXXXXXXXXXXXXXX*/
+.flex-form-2{
+    margin-bottom: 20px;
+    width: 100%;
+}
+.address-card-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.address-card{
+    text-align: center;
+    position: relative;
+    border: var(--main-border-color) 1px solid;
+    border-radius: var(--main-border-radius);
+    width: 70%;
+    padding: 20px;
+    margin: 5px 0;
+}
+.address-card-actions{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.address-card-tag{
+    color: green;
+    display: flex;
+    justify-content: center;
+}
+.myaccount-vertical-separator-1{
+    width: 0;
+}
+.myaccount-vertical-separator-2{
+    width: 0;
+}
+.myaccount-vertical-separator-3{
+    width: 0;
+}
+@media screen and (min-width: 478px) {
+}
+@media screen and (min-width: 720px) {
+    .flex-form {
+        width: 49.5%;
+    }
+    .vertical-separator{
+        width: 1%;
+    }
+    
+    .myaccount-vertical-separator-1{
+        width: 0.5%;
+    }
+    .myaccount-vertical-separator-3{
+        width: 0.5%;
+    }
+    
+    .flex-form-2 {
+        width: 49.5%;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .flex-form {
+        width: 33%;
+    }
+    .vertical-separator{
+        width: 0.5%;
+    }
+    .vertical-separator-2{
+        width: 0.5%;
+    }
+    .myaccount-vertical-separator-2{
+        width: 0.5%;
+    }
+    
+    .flex-form-2 {
+        width: 24.5%;
+    }
+}
+@media screen and (min-width: 1300px) {
+}

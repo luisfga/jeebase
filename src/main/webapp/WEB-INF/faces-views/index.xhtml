@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+ 
+    <ui:composition template="/WEB-INF/templates/default/main.xhtml">
+
+        <ui:define name="content">
+            
+            <div class="content-header">
+                <div>
+                    <div id="luisfgaSlider">
+                        <ui:repeat value="#{indexView.images}" var="image">
+                            <h:graphicImage name="images/#{image}"/>
+                        </ui:repeat>
+                    </div>
+                </div>
+                <h:outputScript library="js" name="slider.js"/>
+            </div>
+            
+            <p>Conteúdos para a página index</p>
+        </ui:define>
+    </ui:composition>  
+</html>

@@ -1,0 +1,37 @@
+.floatingContainer{
+    z-index: 10000;
+    position: fixed;
+    background-color: transparent;
+    top: 45px;
+    left: 50%;
+    transform: translate(-50%);
+    width: fit-content;
+    display: grid;
+    justify-items: center;
+}
+.fm-message{
+    margin: 5px;
+    padding: 2px 7px;
+}
+.fm-info{
+    border: 0;
+    border-radius: var(--main-border-radius);
+    background-color: #99ff99;
+    color: black;
+    width: fit-content;
+}
+.fm-warn{
+    border: 0;
+    border-radius: var(--main-border-radius);
+    background-color: wheat;
+    color: black;
+    width: fit-content;
+}
+.fm-error{
+    border: 0;
+    border-radius: var(--main-border-radius);
+    background-color: lightcoral;
+    color: black;
+    width: fit-content;
+}
+

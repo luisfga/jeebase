@@ -1,0 +1,54 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:outputStylesheet library="css" name="modal.css"/>
+
+    <h:panelGroup id="#{id}" class="modal">
+        <h:panelGroup id="#{id}_overlay" class="modal-overlay" rendered="#{modalBean.showModal}" layout="block" 
+                      pt:onmousedown="closeModal();">
+            
+            <h:panelGroup id="#{id}_window" class="modal-window" layout="block" 
+                          pt:onmousedown="event.stopPropagation();">
+
+                <h:panelGroup rendered="#{title!=null}" class="modal-title">#{title}</h:panelGroup>
+                <h:panelGroup rendered="#{message!=null}" class="modal-message">#{message}</h:panelGroup>
+                <h:panelGroup rendered="#{modalBean.message!=null}" class="modal-message">#{modalBean.message}</h:panelGroup>
+
+                <h:form id="#{id}_form" class="modal-form">
+                    <!-- script to be called by clicking on overlay, i.e. outside window box -->
+                    <h:commandScript name="closeModal" action="#{modalBean.setShowModal(false)}" render="#{id}"/>
+                    <h:panelGroup class="modal-content">
+                        <ui:insert/>
+                    </h:panelGroup>
+                    <h:panelGroup class="modal-options">
+                        <!-- for normal confirmation, i.e. direct execution of final action, without any custom form -->
+                        <h:commandButton rendered="#{(disableConfirm ne 'true') and (customForm ne 'true')}" action="#{modalBean.confirm()}" 
+                            value="#{confirmLabel!=null?confirmLabel:'Confirm'}" class="modal-button">
+                            <f:ajax event="click" listener="#{modalBean.setShowModal((stayAfterConfirm == 'true'))}"/>
+                            <f:ajax execute="#{id}_form" render="#{id} #{render}"/>
+                        </h:commandButton>
+                        
+                        <!-- the previous ajax onclick listener breaks form validation, so we need this version without it for customForms -->
+                        <h:commandButton rendered="#{(disableConfirm ne 'true') and (customForm eq 'true')}" action="#{modalBean.confirm()}" 
+                            value="#{confirmLabel!=null?confirmLabel:'Confirm'}" class="modal-button">
+                            <f:ajax execute="#{id}_form" render="#{id} #{render}"/>
+                        </h:commandButton>
+
+                        <!-- dunno why f:ajax was not rendering validation messages, so no ajax here-->
+                        <h:commandButton id="#{id}_dismissButton" value="#{dismissLabel!=null?dismissLabel:'Cancel'}" class="modal-button"
+                                         action="#{modalBean.setShowModal(false)}">
+                            <f:ajax render="#{id} #{render}"/>
+                        </h:commandButton>
+                    </h:panelGroup>
+                    
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+        
+    </h:panelGroup>
+    
+</ui:composition>

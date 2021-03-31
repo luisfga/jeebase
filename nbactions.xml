@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-clean install tomee:exec</actionName>
+            <displayName>clean install tomee:exec</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+                <goal>tomee:exec</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-clean install tomee:run</actionName>
+            <displayName>clean install tomee:run</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+                <goal>tomee:run</goal>
+            </goals>
+        </action>
+    </actions>

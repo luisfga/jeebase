@@ -1,0 +1,12 @@
+## JEEBase
+
+`mvn clean install tomee:run`
+
+### Uber Jar
+
+----
+mvn clean install tomee:exec
+java -jar target/luisfga-jeebase.jar
+----
+
+#JPA #Deltaspike #JSF #Shiro #ActiveMQ #Docker

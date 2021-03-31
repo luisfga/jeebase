@@ -1,0 +1,138 @@
+.content{
+    padding: 0;
+}
+
+/*XXXXXXXXX*/
+/*PAGINATOR*/
+/*XXXXXXXXX*/
+.paginator-container{
+    width: 100%;
+    background-color: var(--main-contrast-color);
+    color: var(--main-plain-text-color);
+}
+.pagination-form{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: var(--main-border-color) 1px solid;
+    border-bottom: var(--main-border-color) 1px solid;
+}
+.paginator-left{
+    width: 100%;
+    text-align: center;
+    align-self: center;
+}
+.totalCount{
+}
+.paginator-right{
+    width: 100%;
+    text-align: center;
+    align-self: center;
+}
+.pagination-selectors{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-self: center;
+    background-color: transparent;
+}
+.pagination-option{
+    margin: 0 3px;
+}
+span.pagination-option{
+    padding: 1.5px 5px 4px 5px;
+}
+span.page-number{
+    color: black;
+    background-color: var(--primary-color);
+}
+a.pagination-option{
+    padding: 2px 4px;
+    color: var(--main-plain-text-color);
+}
+a.pagination-option:hover{
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: black;
+}
+
+select {
+    padding: 0;
+    font-size: 1em;
+    color: var(--main-plain-text-color);
+    border: var(--main-border-color) 1px solid;
+}
+
+/*XXXXXXXXXX*/
+/*  RESULT  */
+/*XXXXXXXXXX*/
+.search-result-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 20px;
+    width: -webkit-fill-available;
+    width: -moz-available;
+}
+
+.search-result-item-card{
+    margin: 5px;
+    padding: 5px;
+    background-color: var(--list-item-card-background);
+    color: var(--main-plain-text-color);
+    display: grid;
+    width: min-content;
+}
+.search-result-item-card:hover{
+    box-shadow: 0 0 8px var(--list-item-card-shadow);
+}
+.product-link {
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+}
+
+.product-image{
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    overflow: hidden;
+}
+.unavailable-tag{
+    position: absolute;
+    top: 5px;
+    left: -15px;
+    color: red;
+    transform: rotate(-20deg);
+    background-color: #aaaaaa;
+    padding: 0 5px;
+}
+.product-image > img {
+    width: 200px;
+}
+.product-name{
+}
+
+.item-card-form{
+    align-self: self-end;
+}
+
+@media screen and (min-width: 720px) {
+    .paginator-left{
+        width: 33%;
+    }
+    .paginator-right{
+        width: 33%;
+    }
+    .pagination-selectors{
+        width: 33%;
+    }
+}
+@media screen and (min-width: 950px) {
+
+}
+@media screen and (min-width: 1024px) {
+    
+}

@@ -1,0 +1,131 @@
+<facelet-taglib
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_3.xsd"
+    version="2.3">
+    
+    <namespace>http://luisfga.com/jsf/tags</namespace>
+
+    <tag>
+        <tag-name>sidePanel</tag-name>
+        <source>tags/sidePanel.xhtml</source>
+        <attribute>
+            <description>ID that may be referenced by others jsf components</description>
+            <name>id</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Transition duration</description>
+            <name>transitionDuration</name>
+            <required>false</required>
+            <type>java.lang.Long</type>
+        </attribute>
+        <attribute>
+            <description>Page to be included</description>
+            <name>src</name>
+            <required>false</required>
+            <type>java.net.URI</type>
+        </attribute>
+        <attribute>
+            <description>Css literal to control the margin of content to adapt on different pages shape.</description>
+            <name>contentMargin</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Overlay backgroung color</description>
+            <name>overlayBgColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>SidePanel backgroung color</description>
+            <name>bgColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If the penal should be shown on the right of the screen.</description>
+            <name>alignToRight</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+    
+    <tag>
+        <tag-name>floatingMessages</tag-name>
+        <source>tags/floatingMessages.xhtml</source>
+        <attribute>
+            <description>ID that may be referenced by others jsf components</description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Flag indicating that characters that are sensitive in HTML and XML markup must be escaped. Unlike the JSF outputText, this flag is set to "false" by default.</description>
+            <name>escape</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    
+    <tag>
+        <tag-name>modal</tag-name>
+        <source>tags/modal.xhtml</source>
+        <attribute>
+            <description>The famous ID</description>
+            <name>id</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Title for the modal window</description>
+            <name>title</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Main message</description>
+            <name>message</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Value for Confirm button text</description>
+            <name>confirmLabel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Value for Cancel button text</description>
+            <name>dismissLabel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Components to be rendered after confirmation</description>
+            <name>render</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>If the modal is just for info, you should disable the confirm button</description>
+            <name>disableConfirm</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>If the modal should stay open after clicking on confirm button, e.g. possible form validation. Defaults to false.</description>
+            <name>stayAfterConfirm</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>If the modal contains fields of a form. In this case we need to disable ajax to confirmButton work properly. Its was needed. Sorry.</description>
+            <name>customForm</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+</facelet-taglib>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">  
+ 
+    <!--TODO: tentar retirar o templating-->
+    <ui:composition template="/WEB-INF/templates/default/main.xhtml">
+        <f:metadata>
+            <f:viewParam name="encodedUserEmail" value="#{authenticationBean.encodedUserEmail}" />
+            <f:viewAction action="#{authenticationBean.confirmRegistration()}"/>
+        </f:metadata>
+    </ui:composition>        
+ 
+</html>

@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:l="http://luisfga.com/jsf/tags">  
+
+    <f:metadata>
+        <!-- for cases of null searchTxt, e.g., back buttons after session expiration -->
+        <f:event type="preRenderView" listener="#{searchView.handleParamsNullity}"/>
+    </f:metadata>
+    
+    <ui:composition template="/WEB-INF/templates/default/main.xhtml">
+        
+        <ui:define name="head-appendix">
+            <h:outputStylesheet library="css" name="search.css"/>
+        </ui:define>
+        
+        <ui:define name="topbar-extra">
+            <h:panelGroup id="paginatorContainer" class="paginator-container">
+                <h:form id="paginatorForm" class="pagination-form">
+                    <h:panelGroup class="paginator-left">
+                        <h:panelGroup layout="block">
+                            #{searchView.searchInfo}
+                        </h:panelGroup>
+                        <h:panelGroup class="totalCount" layout="block">#{global['total']}: #{searchView.paginator.count}</h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup class="pagination-selectors">
+                        <h:panelGroup rendered="#{searchView.paginator.lastPage>1}">
+                            <h:commandLink value="&#9665;&#9665;" action="#{searchView.paginator.goToFirstPage()}" style="visibility: #{searchView.paginator.currentPageIsFirst()?'hidden':'visibility'}" class="pagination-option"/>
+                            <h:commandLink value="&#9665;" action="#{searchView.paginator.goToPreviousPage()}" style="visibility: #{searchView.paginator.currentPageIsFirst()?'hidden':'visibility'}" class="pagination-option"/>
+                            <h:commandLink value="#{searchView.paginator.currentPageNumber()-1}" action="#{searchView.paginator.goToPreviousPage()}" disabled="#{searchView.paginator.currentPageIsFirst()}" style="visibility: #{searchView.paginator.currentPageIsFirst()?'hidden':'visibility'}" class="pagination-option page-number"/>
+                            <h:commandLink value="#{searchView.paginator.currentPageNumber()}" disabled="true" class="pagination-option page-number"/>
+                            <h:commandLink value="#{searchView.paginator.currentPageNumber()+1}" action="#{searchView.paginator.goToNextPage()}" disabled="#{searchView.paginator.currentPageIsLast()}" style="visibility: #{searchView.paginator.currentPageIsLast()?'hidden':'visibility'}" class="pagination-option page-number"/>
+                            <h:commandLink value="&#9655;" action="#{searchView.paginator.goToNextPage()}" style="visibility: #{searchView.paginator.currentPageIsLast()?'hidden':'visibility'}" class="pagination-option"/>
+                            <h:commandLink value="&#9655;&#9655;" action="#{searchView.paginator.goToLastPage()}" style="visibility: #{searchView.paginator.currentPageIsLast()?'hidden':'visibility'}" class="pagination-option"/>                            
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup class="paginator-right">
+                        #{global['items.per.page']}
+                        <h:selectOneMenu value="#{searchView.paginator.pageSize}">
+                            <f:selectItem itemValue="5" itemLabel="5"/>
+                            <f:selectItem itemValue="10" itemLabel="10"/>
+                            <f:selectItem itemValue="20" itemLabel="20"/>
+                            <f:selectItem itemValue="50" itemLabel="50"/>
+                            <f:ajax event="change" listener="#{searchView.onChangePageSize()}" render="content"/>
+                        </h:selectOneMenu>
+                        #{' '}
+                        <h:selectOneMenu value="#{searchView.orderBy}" title="#{global['order']}">
+                            <f:selectItem itemValue="price_Asc" itemLabel="#{global['price']} &#9650;"/>
+                            <f:selectItem itemValue="price_Dsc" itemLabel="#{global['price']} &#9660;"/>
+                            <f:selectItem itemValue="name_Asc" itemLabel="#{global['name']} &#9650;"/>
+                            <f:selectItem itemValue="name_Dsc" itemLabel="#{global['name']} &#9660;"/>
+                            <f:ajax event="change" listener="#{searchView.reOrder()}" render="paginatorContainer searchResultContainer"/>
+                        </h:selectOneMenu>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+        
+        <ui:define name="content">
+            <h:panelGroup id="searchResultContainer" class="search-result-container">
+                <ui:repeat id="searchResultProducts" value="#{searchView.paginator.list}" var="product" varStatus="repetition">
+
+                    <div class="search-result-item-card">
+                        <h:link outcome="/product" class="product-link">
+                            <div class="product-image">
+                                <o:graphicImage rendered="#{not empty product.coverPhoto}" value="#{imageBean.get(product.coverPhoto.id)}"/>
+                            </div>
+                            <f:param name="productId" value="#{product.id}"/>
+                            <f:param name="backTarget" value="#{view.viewId}"/>
+                            <h:panelGroup rendered="#{product.stock lt 1}" class="unavailable-tag">#{global['unavailable']}</h:panelGroup>
+                        </h:link>
+                        <div class="product-name" title="#{product.name}">#{product.name.length()>25?product.name.subSequence(0, 25).concat('...'):product.name}</div>
+                        <div class="product-price">
+                            <h:outputText value="#{product.price}">
+                                <f:convertNumber type="currency"/>
+                            </h:outputText>    
+                        </div>
+                        <h:form id="productForm" class="item-card-form">
+                            <h:commandButton rendered="#{product.stock gt 0}" action="#{userSessionBean.addToCart(product)}" 
+                                             value="#{global['add.to.cart']}" class="button wide-button">
+                                <f:ajax render="cartBadge cart messages"/>
+                            </h:commandButton>
+                            <h:panelGroup rendered="#{(product.stock lt 1) and (not empty userSessionBean.appUser.username)}">
+                                <h:commandButton action="#{userSessionBean.registerUserInterest(product.id)}"
+                                          value="#{global['add.to.wishlist']}" class="button alt-button wide-button" 
+                                          title="#{global['get.notified.when.available']}">
+                                    <f:ajax render="messages"/>
+                                </h:commandButton>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{(product.stock lt 1) and (empty userSessionBean.appUser.username)}">
+                                <h:commandButton action="#{userSessionBean.askForGuestEmail(product.id)}"
+                                          value="#{global['add.to.wishlist']}" class="button alt-button wide-button" 
+                                          title="#{global['get.notified.when.available']}">
+                                    <f:ajax render="guestEmailModal"/>
+                                </h:commandButton>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </ui:repeat>
+
+                <!-- MODAL -->
+                <l:modal id="guestEmailModal" confirmLabel="#{global['send']}" dismissLabel="#{global['cancel']}"
+                         message="#{global['ask.for.email.available.product']}" render="messages searchResultContainer" customForm="true">
+                    <h:inputText id="guestEmail" value="#{userSessionBean.appUser.username}" class="input" required="true" 
+                                 requiredMessage="#{global['validation.error.required']}" validatorMessage="#{global['validation.error.invalid.email']}">
+                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                    </h:inputText>
+                    <h:message for="guestEmail" errorClass="error-msg"/>
+                </l:modal>
+                
+            </h:panelGroup>
+        </ui:define>
+        
+    </ui:composition>  
+</html>

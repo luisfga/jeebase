@@ -1,0 +1,79 @@
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.content-header{
+    margin: 50px 50px 20px 50px;
+}
+
+.orientation-title{
+    display: block;
+    font-weight: bold;
+}
+
+.orientation{
+    display: block;
+    margin-top: 20px;
+    margin-right: auto;
+    font-size: .6em;
+}
+
+.authForm{
+    display: grid;
+    margin: 0 50px;
+    width: 100%;
+}
+.formField{
+    width: 100%;
+}
+.formActions{
+    text-align: end;
+    margin-top: 20px;
+}
+.formButton{
+    
+}
+
+.formExtraFooter{
+    margin-top: 20px;
+    text-align: end;
+}
+.formLink{
+    padding: 0;
+}
+
+@media screen and (min-width: 478px) {
+    .content{
+        /*justify-content: center;*/
+    }
+    .content-header{
+        margin-left: 15%;
+    }
+    .authForm{
+        margin: 0 15%;
+        width: 40%;
+    }
+}
+
+/* On screens that are Xpx or greater*/
+@media screen and (min-width: 720px) {
+    .authForm{
+        width: 30%;
+    }
+}
+
+/* On screens that are Xpx or greater*/
+@media screen and (min-width: 960px) {
+    .authForm{
+        width: 25%;
+    }
+}
+
+/* On screens that are Xpx or greater*/
+@media screen and (min-width: 1100px) {
+    .authForm{
+        width: 20%;
+    }
+}

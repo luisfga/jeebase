@@ -1,0 +1,27 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <h:outputStylesheet library="css" name="sidePanel.css"/>
+    
+    <h:panelGroup id="#{id.concat('Overlay')}" class="lu-sidePanelOverlay">
+        <h:panelGroup id="#{id}" class="lu-sidePanel">
+            <h:panelGroup id="#{id.concat('Content')}" class="lu-sidePanelContent">
+                <ui:include src="#{src}" rendered="#{not empty src}"/>
+                <ui:insert />
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+    
+    <h:outputScript library="js" name="sidePanel.js"/>
+    
+    <h:outputScript>setupSidePanel('#{id}');
+        <h:outputText rendered="#{not empty transitionDuration}">setTransitionDuration('#{id}',#{transitionDuration});</h:outputText>
+        <h:outputText rendered="#{not empty contentMargin}">setContentMargin('#{id}','#{contentMargin}');</h:outputText>
+        <h:outputText rendered="#{not empty overlayBgColor}">setOverlayBgColor('#{id}','#{overlayBgColor}');</h:outputText>
+        <h:outputText rendered="#{not empty bgColor}">setSidePanelBgColor('#{id}','#{bgColor}');</h:outputText>
+        <h:outputText rendered="#{alignToRight == 'true'}">setAlignToRight('#{id}');</h:outputText>
+        
+    </h:outputScript>
+</ui:composition>

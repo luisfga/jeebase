@@ -1,0 +1,40 @@
+#RESUMO do processo inteiro
+1. mvn clean install tomee:exec
+2. docker build -f Dockerfile -t luisfga-jeebase:prd . --build-arg APP_MAIL_SESSION_HOST --build-arg APP_MAIL_SESSION_PORT --build-arg APP_MAIL_SESSION_USERNAME --build-arg APP_MAIL_SESSION_PASSWORD
+3. docker tag luisfga-jeebase:prd registry.heroku.com/luisfga-jeebase/web
+4. docker push registry.heroku.com/luisfga-jeebase/web
+5. heroku container:release web -a luisfga-jeebase
+
+#TIPS
+# não esquecer de -> mvn clean package
+
+#DOCKER TIPS
+# Excluir 'dangling' containers -> docker rmi $(docker images --filter "dangling=true" -q)
+
+# Build command DEV  -> docker build -f Dockerfile.dev -t luisfga-jeebase:dev . --build-arg APP_MAIL_SESSION_HOST --build-arg APP_MAIL_SESSION_PORT --build-arg APP_MAIL_SESSION_USERNAME --build-arg APP_MAIL_SESSION_PASSWORD
+
+# Run command (DEV) -> docker run --add-host=host:192.168.0.3 -p 8080:8080 luisfga-jeebase:dev
+
+# Listar containeres em execução -> docker ps
+
+# Acessar bash dentro de um container que esteja rodando -> docker exec -it <containerID> /bin/bash
+
+# inspecionar o exit code de um container que não estartou
+# a qualquer momento -> docker inspect <container-id> --format='{{.State.ExitCode}}'
+# logo após a falha -> echo $?
+
+#HEROKU TIPS
+#https://devcenter.heroku.com/articles/container-registry-and-runtime#building-and-pushing-image-s
+
+#para buildar, fazer o push e depois release
+#build + push -> heroku container:push web -a luisfga-jeebase
+#release -> heroku container:release web -a luisfga-jeebase
+
+# para fazer o push de uma imagem existente
+# 1. é preciso marcar o container pra upload
+# -> docker tag <image> registry.heroku.com/<app>/<process-type>
+# por exemplo -> docker tag luisfga-jeebase:prd registry.heroku.com/luisfga-jeebase/web
+# 2. em seguida, push da imagem 'tagueada'
+# -> docker push registry.heroku.com/<app>/<process-type>
+# por exemplo -> docker push registry.heroku.com/luisfga-jeebase/web
+# 3. depois, release normal -> heroku container:release web -a luisfga-jeebase

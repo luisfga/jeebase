@@ -1,0 +1,23 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:outputStylesheet library="css" name="floatingMessages.css"/>
+
+    <h:panelGroup id="#{id!=null?id:'floatingMessages'}" class="floatingContainer">
+        <ui:repeat value="#{floatingMessagesBean.messages}" var="fMessage" varStatus="msg">
+            <div id="msg#{msg.index}" class="fm-message #{fMessage.severity == 'INFO'? 'fm-info': fMessage.severity == 'WARN'? 'fm-warn': 'fm-error'}">
+                <h:outputText value="#{fMessage.message}" escape="#{escape!=null?escape:'false'}"/>
+                <script type="text/javascript">
+                    setTimeout(function(){
+                        let msgDiv = document.getElementById('msg#{msg.index}');
+                        if(msgDiv!==null)
+                            msgDiv.parentNode.removeChild(msgDiv);
+                    },#{fMessage.timeLeft});
+                </script>
+            </div>
+        </ui:repeat>
+    </h:panelGroup>
+    
+</ui:composition>

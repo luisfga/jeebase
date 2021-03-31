@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+    <h:head>
+        <title>TomEE Embedded</title>
+    </h:head>
+    <h:body>
+        <h3>CDI managed beans</h3>
+        <ui:repeat value="#{statusBean.managedBeans}" var="managedBean">
+            <h:outputText value="#{managedBean.beanClass.canonicalName}"/><br/>
+        </ui:repeat>
+        <h3>JPA entities</h3>
+        <ui:repeat value="#{statusBean.entities}" var="entity">
+            <h:outputText value="#{entity}"/><br/>
+        </ui:repeat>
+    </h:body>
+</html>
