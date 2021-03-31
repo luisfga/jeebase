@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import javax.servlet.ServletContextEvent;
@@ -43,6 +44,7 @@ public class DatabaseSetup implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         checkRequiredData();
+//        setupDeveloperUser();
     }
 
     private void checkRequiredData() {
@@ -98,4 +100,29 @@ public class DatabaseSetup implements ServletContextListener {
         
     }
     
+    private void setupDeveloperUser(){
+        
+        EntityManager em = emf.createEntityManager();
+
+        //check roles
+        TypedQuery<AppUser> develQuery = em.createQuery("SELECT au FROM AppUser au WHERE au.username = 'developer@system.devel'", AppUser.class);
+        
+        try {
+            AppUser appUser = develQuery.getSingleResult();
+            logger.info("Developer user found.");
+            
+        } catch (NoResultException nre){
+            logger.info("Setting up new developer user");
+            AppUser developer = new AppUser();
+            developer.setUsername("developer@system.devel");
+            DefaultPasswordService dps = new DefaultPasswordService();
+            developer.setPassword(dps.encryptPassword("123"));
+            developer.setName("developer");
+            developer.setBirthday(LocalDate.now());
+            developer.setStatus("ok");
+            configService.saveUser(developer);
+            logger.info("New developer user created.");
+        }
+        
+    }
 }
