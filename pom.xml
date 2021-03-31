@@ -162,7 +162,7 @@
     </dependencies>
 
     <build>
-        <finalName>webstore</finalName>
+        <finalName>jeebase</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

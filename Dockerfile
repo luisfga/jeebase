@@ -42,10 +42,10 @@ ENV APP_MAIL_SESSION_PASSWORD=$APP_MAIL_SESSION_PASSWORD
 
 #Variáveis necessárias no servidor de produção (deixadas aqui pra fazer um último teste antes do deploy)
 #os valores estão no heroku, nas configVars (tb no "postgres-addon", em "settings")
-#ENV WEBSTORE_DB_HOST=???
-#ENV WEBSTORE_DATABASE=???
-#ENV WEBSTORE_DB_USER=???
-#ENV WEBSTORE_DB_PASSWORD=???
+#ENV DB_HOST=???
+#ENV DATABASE=???
+#ENV DB_USER=???
+#ENV DB_PASSWORD=???
 
 #Heroku usa uma porta aleatória e a 'exporta' como PORT.
 EXPOSE 8080
