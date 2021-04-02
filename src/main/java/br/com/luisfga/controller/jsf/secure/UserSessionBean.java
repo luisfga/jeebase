@@ -55,7 +55,7 @@ public class UserSessionBean implements Serializable{
         Principal principal = securityContext.getCallerPrincipal();
         if(principal != null){
             logger.debug("User "+ principal + " is authenticated");
-            this.appUser = userService.loadUser(principal.toString());
+            this.appUser = userService.loadUser(principal.getName());
         
         } else {
             this.appUser = new AppUser();
@@ -75,7 +75,7 @@ public class UserSessionBean implements Serializable{
         Principal principal = securityContext.getCallerPrincipal();
         if(principal != null) {
             //load user data from db
-            this.appUser = userService.loadUser(principal.toString());
+            this.appUser = userService.loadUser(principal.getName());
         }
     }
     
