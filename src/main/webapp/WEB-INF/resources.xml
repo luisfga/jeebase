@@ -4,17 +4,17 @@
     </Resource>
     
     <!-- Datasource utilizando variáveis de ambiente. -->
-<!--    <Resource id="applicationDS" type="DataSource">
+    <Resource id="applicationDS" type="DataSource">
         JdbcDriver          org.postgresql.Driver
-        JdbcUrl             jdbc:postgresql://${JEEBASE_DB_HOST}/${JEEBASE_DATABASE}
-        UserName            ${JEEBASE_DB_USER}
-        Password            ${JEEBASE_DB_PASSWORD}
+        JdbcUrl             jdbc:postgresql://${POSTGRES_DB_HOST}/${JEEBASE_DATABASE}
+        UserName            ${POSTGRES_DB_USER}
+        Password            ${POSTGRES_DB_PASSWORD}
         JtaManaged          true
         DefaultAutoCommit   true
         maxActive = 15
         maxIdle = 15
         minIdle = 0
-    </Resource>-->
+    </Resource>
     
     <!-- DataSource para desenvolvimento -->
         <!-- server for continuous checking -->
@@ -25,14 +25,14 @@
         <!--JdbcUrl             jdbc:hsqldb:file:appDevData/jeebase-db-->
         <!--for short and fast testing maybe its better a memory db-->
         <!--JdbcUrl             jdbc:hsqldb:mem:jeebase-db-->
-    <Resource id="applicationDS" type="DataSource">
+<!--    <Resource id="applicationDS" type="DataSource">
         JdbcDriver          org.hsqldb.jdbcDriver
         JdbcUrl             jdbc:hsqldb:file:appDevData/jeebase-db
         UserName            sa
         Password            
         JtaManaged          true
         DefaultAutoCommit   true
-    </Resource>
+    </Resource>-->
     
     <!--
         Abaixo um template de javax.mail.Session preconfigurado.

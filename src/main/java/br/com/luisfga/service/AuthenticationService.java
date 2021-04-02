@@ -1,9 +1,10 @@
 package br.com.luisfga.service;
 
+import br.com.luisfga.config.TomEEPbkdf2PasswordHash;
 import br.com.luisfga.domain.entities.AppRole;
 import br.com.luisfga.domain.entities.AppUser;
 import br.com.luisfga.domain.entities.AppUserOperationWindow;
-import br.com.luisfga.domain.repositories.UserRepository;
+import br.com.luisfga.service.repositories.UserRepository;
 import br.com.luisfga.service.events.LoginEvent;
 import br.com.luisfga.service.events.LogoutEvent;
 import br.com.luisfga.service.exceptions.ConfirmationLinkException;
@@ -23,15 +24,6 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.DefaultPasswordService;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +37,7 @@ public class AuthenticationService {
     
     @Inject private UserRepository userRepository;
     @Inject private MailHelper mailHelper;
-    private DefaultPasswordService defaultPasswordService = new DefaultPasswordService();
+    @Inject private TomEEPbkdf2PasswordHash defaultPasswordService;
     
     public void registerNewUser(AppUser newAppUser) throws EmailAlreadyTakenException {
         //verifica se o email informado está disponível
@@ -57,7 +49,7 @@ public class AuthenticationService {
         newAppUser.setJoinTime(OffsetDateTime.now());
 
         //encrypt password
-        String encryptedPassword = defaultPasswordService.encryptPassword(newAppUser.getPassword());
+        String encryptedPassword = defaultPasswordService.generate(newAppUser.getPassword().toCharArray());
         newAppUser.setPassword(encryptedPassword);
         
         //configura ROLE
@@ -85,26 +77,26 @@ public class AuthenticationService {
     }
     
     public void login(String username, String password) throws LoginException, PendingEmailConfirmationException {
-        UsernamePasswordToken authToken = new UsernamePasswordToken(username, password);
-        authToken.setRememberMe(false);
+//        UsernamePasswordToken authToken = new UsernamePasswordToken(username, password);
+//        authToken.setRememberMe(false);
+//        
+//        Subject currentUser = SecurityUtils.getSubject();
+//        try {
+//            currentUser.login(authToken);
+//        } catch ( UnknownAccountException | IncorrectCredentialsException | LockedAccountException | ExcessiveAttemptsException ice ) {
+//            throw new LoginException();
+//        } catch (DisabledAccountException ex){
+//            throw new PendingEmailConfirmationException();
+//        }
         
-        Subject currentUser = SecurityUtils.getSubject();
-        try {
-            currentUser.login(authToken);
-        } catch ( UnknownAccountException | IncorrectCredentialsException | LockedAccountException | ExcessiveAttemptsException ice ) {
-            throw new LoginException();
-        } catch (DisabledAccountException ex){
-            throw new PendingEmailConfirmationException();
-        }
-        
-        loginEvent.fire("User just logged-in: " + username + " / Admin? " + SecurityUtils.getSubject().hasRole("ADMIN"));
+//        loginEvent.fire("User just logged-in: " + username + " / Admin? " + SecurityUtils.getSubject().hasRole("ADMIN"));
     }
     
     public void logout(){
-        Subject currentUser = SecurityUtils.getSubject();
-        logger.debug("User logged-out: " + currentUser.getPrincipal());
-        logoutEvent.fire("User just logged-out: " + currentUser.getPrincipal());
-        currentUser.logout();
+//        Subject currentUser = SecurityUtils.getSubject();
+//        logger.debug("User logged-out: " + currentUser.getPrincipal());
+//        logoutEvent.fire("User just logged-out: " + currentUser.getPrincipal());
+//        currentUser.logout();
     }
     
     public void prepareRecovery(String username, LocalDate birthday, String token) throws WrongInfoException {
@@ -174,7 +166,7 @@ public class AuthenticationService {
     public void resetPassword(String username, String password) {
         AppUser appUser = userRepository.findBy(username);
 
-        appUser.setPassword(defaultPasswordService.encryptPassword(password));
+        appUser.setPassword(defaultPasswordService.generate(password.toCharArray()));
 
         appUser.setOperationWindow(null); //deleta/fecha janela de operação
         userRepository.save(appUser);

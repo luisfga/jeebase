@@ -6,8 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:l="http://luisfga.com/jsf/tags"
-      xmlns:shiro="http://shiro.apache.org/tags">
+      xmlns:l="http://luisfga.com/jsf/tags">
     
     <f:view locale="#{localeBean.locale}">
         <h:head>
@@ -48,15 +47,15 @@
 
                     <!--Top bar - RIGHT-->
                     <div class="topbar-right-section">
-                        <shiro:notAuthenticated>
-                            <h:link value="#{global['enter']}" outcome="/auth/login" class="menu-item"/>
-                        </shiro:notAuthenticated>
+                        <h:panelGroup rendered="#{empty request.remoteUser}">
+                            <h:link value="#{global['enter']}" outcome="/secure/dashboard" class="menu-item"/>
+                        </h:panelGroup>
                         
-                        <shiro:authenticated>
+                        <h:panelGroup rendered="#{not empty request.remoteUser}">
                             <h:form class="menu-item">
                                 <h:commandLink value="#{global['logout']}" action="#{authenticationBean.logout()}"/>
                             </h:form>
-                        </shiro:authenticated>
+                        </h:panelGroup>
 
                     </div>
                     
@@ -68,12 +67,12 @@
             <h:panelGroup class="content" id="content" layout="block">
                 <l:sidePanel id="menuSidePanel" bgColor="var(--main-bg-color)" transitionDuration="500">
                     <div class="sidemenu-content">
-                        <shiro:authenticated>
+                        <h:panelGroup rendered="#{not empty request.remoteUser}">
                             <h:panelGroup layout="block" class="sidemenu-section">
                                 <h:outputText value="Conta" class="sidemenu-title"/>
                                 <h:link value="#{global['dashboard']}" outcome="/secure/dashboard" class="sidemenu-option"/>
                             </h:panelGroup>
-                        </shiro:authenticated>
+                        </h:panelGroup>
                     </div>
                 </l:sidePanel>
                 

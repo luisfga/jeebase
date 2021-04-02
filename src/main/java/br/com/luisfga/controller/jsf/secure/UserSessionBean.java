@@ -9,15 +9,15 @@ import br.com.luisfga.service.events.LogoutEvent;
 import br.com.luisfga.service.secure.UserService;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.security.Principal;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.enterprise.SecurityContext;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +31,7 @@ public class UserSessionBean implements Serializable{
     @Inject private FloatingMessagesBean floatingMessagesBean;
     @Inject private ResourceBean resourceBean;
     @Inject private ModalBean modalBean;
+    @Inject private transient SecurityContext securityContext;
     
     private AppUser appUser;
     private BigDecimal cartTotal = new BigDecimal(0);
@@ -50,15 +51,12 @@ public class UserSessionBean implements Serializable{
     
     @PostConstruct
     public void init(){
-        Subject subject = SecurityUtils.getSubject();
-        if(subject.isAuthenticated()){
-            logger.debug("User "+ subject.getPrincipal() + " is authenticated");
-            this.appUser = userService.loadUser(subject.getPrincipal().toString());
+
+        Principal principal = securityContext.getCallerPrincipal();
+        if(principal != null){
+            logger.debug("User "+ principal + " is authenticated");
+            this.appUser = userService.loadUser(principal.toString());
         
-            //deixando elses separados, apenas para sinalizar possível distinção futura
-        } else if(subject.isRemembered()){
-            logger.debug("User "+ subject.getPrincipal() + " is remembered");
-            this.appUser = new AppUser();
         } else {
             this.appUser = new AppUser();
         }
@@ -74,13 +72,10 @@ public class UserSessionBean implements Serializable{
         logger.debug("Event handling: " + message);
         ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).changeSessionId();
         
-        Subject subject = SecurityUtils.getSubject();
-        if(subject != null) {
-
+        Principal principal = securityContext.getCallerPrincipal();
+        if(principal != null) {
             //load user data from db
-            String username = subject.getPrincipal().toString();
-            this.appUser = userService.loadUser(username);
-            
+            this.appUser = userService.loadUser(principal.toString());
         }
     }
     
