@@ -16,12 +16,12 @@
     
     <h:outputScript library="js" name="sidePanel.js"/>
     
-    <h:outputScript>setupSidePanel('#{id}');
-        <h:outputText rendered="#{not empty transitionDuration}">setTransitionDuration('#{id}',#{transitionDuration});</h:outputText>
-        <h:outputText rendered="#{not empty contentMargin}">setContentMargin('#{id}','#{contentMargin}');</h:outputText>
-        <h:outputText rendered="#{not empty overlayBgColor}">setOverlayBgColor('#{id}','#{overlayBgColor}');</h:outputText>
-        <h:outputText rendered="#{not empty bgColor}">setSidePanelBgColor('#{id}','#{bgColor}');</h:outputText>
-        <h:outputText rendered="#{alignToRight == 'true'}">setAlignToRight('#{id}');</h:outputText>
-        
+    <h:outputScript>
+        setupSidePanel('#{id}');
+        <h:panelGroup rendered="#{not empty transitionDuration}">setTransitionDuration('#{id}',#{transitionDuration});</h:panelGroup>
+        <h:panelGroup rendered="#{not empty contentMargin}">setContentMargin('#{id}','#{contentMargin}');</h:panelGroup>
+        <h:panelGroup rendered="#{not empty overlayBgColor}">setOverlayBgColor('#{id}','#{overlayBgColor}');</h:panelGroup>
+        <h:panelGroup rendered="#{not empty bgColor}">setSidePanelBgColor('#{id}','#{bgColor}');</h:panelGroup>
+        <h:panelGroup rendered="#{alignToRight == 'true'}">setAlignToRight('#{id}');</h:panelGroup>
     </h:outputScript>
 </ui:composition>
