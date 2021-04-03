@@ -14,11 +14,6 @@
         <location>/errors/default-error</location>
     </error-page>
     
-    <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/index</location>
-    </error-page>
-    
     <resource-ref>
          <res-ref-name>applicationDS</res-ref-name>
          <res-type>javax.sql.DataSource</res-type>
