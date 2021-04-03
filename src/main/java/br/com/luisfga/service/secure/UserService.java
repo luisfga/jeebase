@@ -1,7 +1,7 @@
 package br.com.luisfga.service.secure;
 
 import br.com.luisfga.domain.entities.AppUser;
-import br.com.luisfga.domain.repositories.UserRepository;
+import br.com.luisfga.service.repositories.UserRepository;
 import br.com.luisfga.service.util.SearchPaginator;
 import java.util.ArrayList;
 import java.util.List;

@@ -19,7 +19,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.transaction.UserTransaction;
-import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,8 @@ public class DatabaseSetup implements ServletContextListener {
     @PersistenceUnit(unitName = "applicationJpaUnit")
     private EntityManagerFactory emf;
     
-
+    @Inject
+    private TomEEPbkdf2PasswordHash defaultPasswordService;
     
     @Inject
     private ConfigService configService;
@@ -76,8 +76,7 @@ public class DatabaseSetup implements ServletContextListener {
             logger.info("Admin user not found");
             admin = new AppUser();
             admin.setUsername("admin@system.admin");
-            DefaultPasswordService dps = new DefaultPasswordService();
-            admin.setPassword(dps.encryptPassword("123"));
+            admin.setPassword(defaultPasswordService.generate("123".toCharArray()));
             admin.setName("admin");
             admin.setBirthday(LocalDate.now());
             admin.setStatus("ok");
@@ -115,8 +114,7 @@ public class DatabaseSetup implements ServletContextListener {
             logger.info("Setting up new developer user");
             AppUser developer = new AppUser();
             developer.setUsername("developer@system.devel");
-            DefaultPasswordService dps = new DefaultPasswordService();
-            developer.setPassword(dps.encryptPassword("123"));
+            developer.setPassword(defaultPasswordService.generate("123".toCharArray()));
             developer.setName("developer");
             developer.setBirthday(LocalDate.now());
             developer.setStatus("ok");

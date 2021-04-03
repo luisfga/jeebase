@@ -10,8 +10,6 @@ import br.com.luisfga.service.exceptions.ConfirmationLinkException;
 import br.com.luisfga.service.exceptions.EmailAlreadyTakenException;
 import br.com.luisfga.service.exceptions.ForbidenOperationException;
 import br.com.luisfga.service.exceptions.InvalidDataException;
-import br.com.luisfga.service.exceptions.LoginException;
-import br.com.luisfga.service.exceptions.PendingEmailConfirmationException;
 import br.com.luisfga.service.exceptions.TimeHasExpiredException;
 import br.com.luisfga.service.exceptions.WrongInfoException;
 import java.io.IOException;
@@ -27,7 +25,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.enterprise.AuthenticationStatus;
+import javax.security.enterprise.SecurityContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,8 @@ public class AuthenticationBean {
     @Inject private LocaleBean localeBean;
     @Inject private ResourceBean resourceBean;
     @Inject private FloatingMessagesBean floatingMessagesBean;
+
+    @Inject private SecurityContext securityContext;
 
     //regitration
     private AppUser appUser;
@@ -162,30 +165,34 @@ public class AuthenticationBean {
         return "login";
     }
     public String login() throws IOException {
-        try {
-            authenticationService.login(this.appUser.getUsername(), this.appUser.getPassword());
-            
-        } catch (LoginException le) { 
-            String errorMessage = resourceBean.getMsgText("global", "action.error.authentication.exception");
-            floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, errorMessage, 7000));
-            return "/auth/login";
-            
-        } catch (PendingEmailConfirmationException pecException) {
-            String errorMessage = resourceBean.getMsgText("global", "action.error.pending.email.confirmation");
-            floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, errorMessage, 15000));
+        logger.debug("NO INÍCIO - securityContext.getCallerPrincipal(): " + securityContext.getCallerPrincipal());
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        
+        AuthenticationStatus status = authenticationService.login(appUser.getUsername(), appUser.getPassword(), request, response);
+        if(null == status){
+            floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, "Login inválido", 10000));
+        } else switch (status) {
+            case SEND_CONTINUE:
+                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, "Login bem sucedido", 10000));
+                facesContext.responseComplete();
+                return "/secure/dashboard?faces-redirect=true";
 
-            //Enviar username para o usuário
-            authenticationService.sendMailForNewUserConfirmation(this.appUser.getUsername(), localeBean.getLocale());
-            return "/auth/login";
+            case SUCCESS:
+                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, "Login bem sucedido", 10000));
+                return "/secure/dashboard?faces-redirect=true";
+
+            default:
+                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, "Login inválido", 10000));
+                break;
         }
-        
-        if(from != null)
-            FacesContext.getCurrentInstance().getExternalContext().redirect(from);
-        
-        return "/secure/dashboard?faces-redirect=true";
+        return "/auth/login";
     }
+    
     public String logout(){
-        authenticationService.logout();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/index?faces-redirect=true";
     }
     public String recoverPassword() {

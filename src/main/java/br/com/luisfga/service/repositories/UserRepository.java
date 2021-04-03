@@ -1,4 +1,4 @@
-package br.com.luisfga.domain.repositories;
+package br.com.luisfga.service.repositories;
 
 import br.com.luisfga.domain.entities.AppRole;
 import br.com.luisfga.domain.entities.AppUser;

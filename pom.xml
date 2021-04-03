@@ -18,12 +18,11 @@
         <war.plugin.version>3.3.1</war.plugin.version>
         <java.version>11</java.version>
         <tomee.version>8.0.6</tomee.version>
-        <tomee.javaee-api.version>8.0-5</tomee.javaee-api.version>
+        <javaee-api.version>8.0.1</javaee-api.version>
         <tomee.classifier>plus</tomee.classifier>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <myfaces.version>2.3.7</myfaces.version>
         <omnifaces.version>3.10.1</omnifaces.version>
-        <shiro.version>1.7.1</shiro.version>
         <javamail.version>1.6.0</javamail.version>
         <postgres.driver.version>42.2.19</postgres.driver.version>
         <deltaspike.version>1.9.4</deltaspike.version>
@@ -54,12 +53,18 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.tomee</groupId>
+            <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${tomee.javaee-api.version}</version>
+            <version>${javaee-api.version}</version>
             <scope>provided</scope>
         </dependency>
-    
+
+        <dependency>
+            <groupId>br.com.luisfga</groupId>
+            <artifactId>domain-entities</artifactId>
+            <version>1</version>
+        </dependency>
+            
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-api</artifactId>
@@ -78,28 +83,6 @@
             <version>${omnifaces.version}</version>
         </dependency>
     
-        <!-- Shiro dependencies: -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-faces</artifactId>
-            <version>2.0</version>
-        </dependency>
-        
         <!--DELTASPIKE-->
         <dependency><!--CORE-->
             <groupId>org.apache.deltaspike.core</groupId>
