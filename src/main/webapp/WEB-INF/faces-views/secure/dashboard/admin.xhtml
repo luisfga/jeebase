@@ -9,6 +9,8 @@
         <div class="header">#{global['administration']}</div>
     </h:panelGroup>
 
-    Logged-in as #{request.userPrincipal.name}
+    Login informations <br/>
+    request.userPrincipal.name #{request.userPrincipal.name}<br/>
+    request.remoteUser: #{request.remoteUser}
     
 </ui:composition>

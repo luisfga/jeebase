@@ -1,8 +1,10 @@
 package br.com.luisfga.config;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.security.enterprise.authentication.mechanism.http.AutoApplySession;
 import javax.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
 import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
+import javax.security.enterprise.authentication.mechanism.http.RememberMe;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 
 @DatabaseIdentityStoreDefinition(
@@ -12,6 +14,7 @@ import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
         hashAlgorithm = TomEEPbkdf2PasswordHash.class,
         priority = 10
 )
+@AutoApplySession @RememberMe
 @CustomFormAuthenticationMechanismDefinition(
         loginToContinue = @LoginToContinue(
                 loginPage = "/auth/login",

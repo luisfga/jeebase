@@ -27,8 +27,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.SecurityContext;
-import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
-import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -167,70 +165,30 @@ public class AuthenticationBean {
         return "login";
     }
     public String login() throws IOException {
-//        try {
-//            authenticationService.login(this.appUser.getUsername(), this.appUser.getPassword());
-//            
-//        } catch (LoginException le) { 
-//            String errorMessage = resourceBean.getMsgText("global", "action.error.authentication.exception");
-//            floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, errorMessage, 7000));
-//            return "/auth/login";
-//            
-//        } catch (PendingEmailConfirmationException pecException) {
-//            String errorMessage = resourceBean.getMsgText("global", "action.error.pending.email.confirmation");
-//            floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, errorMessage, 15000));
-//
-//            //Enviar username para o usuário
-//            authenticationService.sendMailForNewUserConfirmation(this.appUser.getUsername(), localeBean.getLocale());
-//            return "/auth/login";
-//        }
-//        
-//        if(from != null)
-//            FacesContext.getCurrentInstance().getExternalContext().redirect(from);
+        logger.debug("NO INÍCIO - securityContext.getCallerPrincipal(): " + securityContext.getCallerPrincipal());
         
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        HttpServletResponse response = (HttpServletResponse)facesContext.getExternalContext().getResponse();
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
         
-        switch (continueAuthentication()) {
-            
-            case SEND_FAILURE:
-                logger.debug("SEND_FAILURE");
-                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, "Login failed", 15000));
-                return "/auth/login";
-            
+        AuthenticationStatus status = authenticationService.login(appUser.getUsername(), appUser.getPassword(), request, response);
+        if(null == status){
+            floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, "Login inválido", 10000));
+        } else switch (status) {
             case SEND_CONTINUE:
-                logger.debug("SEND_CONTINUE");
+                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, "Login bem sucedido", 10000));
+                facesContext.responseComplete();
+                return "/secure/dashboard?faces-redirect=true";
+
             case SUCCESS:
-                logger.debug("SUCCESS");
-                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, "Login succeed", 15000));
-                
-            case NOT_DONE:
+                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, "Login bem sucedido", 10000));
+                return "/secure/dashboard?faces-redirect=true";
+
+            default:
+                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, "Login inválido", 10000));
+                break;
         }
-        
-        logger.debug("request.getParameter(\"loginForm:username\"): " + request.getParameter("loginForm:username"));
-        logger.debug("request.getParameter(\"loginForm:password\"): " + request.getParameter("loginForm:password"));
-        logger.debug("request.getUserPrincipal(): " + request.getUserPrincipal());
-        logger.debug("securityContext.getCallerPrincipal(): " + securityContext.getCallerPrincipal());
-        logger.debug("securityContext.getCallerPrincipal().getName(): " + securityContext.getCallerPrincipal().getName());
-        logger.debug("securityContext.isCallerInRole(\"ADMIN\")? " + securityContext.isCallerInRole("ADMIN"));
-        logger.debug("securityContext.isCallerInRole(\"USER\")? " + securityContext.isCallerInRole("USER"));
-        
-        if(from != null && !from.isBlank())
-            return from;
-        else
-            return "/secure/dashboard?faces-redirect=true";
-    }
-    
-    private AuthenticationStatus continueAuthentication() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        return securityContext.authenticate(
-                (HttpServletRequest) facesContext.getExternalContext().getRequest(),
-                (HttpServletResponse) facesContext.getExternalContext().getResponse(),
-                AuthenticationParameters.withParams()
-                        .credential(new UsernamePasswordCredential(appUser.getUsername(), appUser.getPassword()))
-                        .newAuthentication(true)
-                        .rememberMe(true)
-        );
+        return "/auth/login";
     }
     
     public String logout(){

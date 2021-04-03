@@ -11,8 +11,6 @@ import br.com.luisfga.service.exceptions.ConfirmationLinkException;
 import br.com.luisfga.service.exceptions.EmailAlreadyTakenException;
 import br.com.luisfga.service.exceptions.ForbidenOperationException;
 import br.com.luisfga.service.exceptions.InvalidDataException;
-import br.com.luisfga.service.exceptions.LoginException;
-import br.com.luisfga.service.exceptions.PendingEmailConfirmationException;
 import br.com.luisfga.service.exceptions.TimeHasExpiredException;
 import br.com.luisfga.service.exceptions.WrongInfoException;
 import java.time.LocalDate;
@@ -24,6 +22,12 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.security.enterprise.AuthenticationStatus;
+import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,7 +80,37 @@ public class AuthenticationService {
         userRepository.save(appUser);
     }
     
-    public void login(String username, String password) throws LoginException, PendingEmailConfirmationException {
+    @Inject private SecurityContext securityContext;
+    public AuthenticationStatus login(String username, String password, 
+            HttpServletRequest request, HttpServletResponse response) 
+//            throws LoginException, PendingEmailConfirmationException 
+    {
+        
+        AuthenticationStatus authenticationStatus = securityContext.authenticate(
+                request,response, 
+                AuthenticationParameters.withParams()
+                        .credential(new UsernamePasswordCredential(username, password))
+                        .rememberMe(true)
+        );
+        
+        switch (authenticationStatus) {
+            
+            case SEND_FAILURE:
+                logger.debug("SEND_FAILURE");
+                break;
+            case SEND_CONTINUE:
+                logger.debug("SEND_CONTINUE");
+                loginEvent.fire("User just logged-in: " + username);
+                break;
+            case SUCCESS:
+                logger.debug("SUCCESS");
+                loginEvent.fire("User just logged-in: " + username);
+                break;
+            case NOT_DONE:
+        }
+        
+        return authenticationStatus;
+        
 //        UsernamePasswordToken authToken = new UsernamePasswordToken(username, password);
 //        authToken.setRememberMe(false);
 //        
@@ -89,7 +123,6 @@ public class AuthenticationService {
 //            throw new PendingEmailConfirmationException();
 //        }
         
-//        loginEvent.fire("User just logged-in: " + username + " / Admin? " + SecurityUtils.getSubject().hasRole("ADMIN"));
     }
     
     public void logout(){
