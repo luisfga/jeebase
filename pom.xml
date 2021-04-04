@@ -21,7 +21,6 @@
         <faces.version>2.3.9</faces.version>
         <omnifaces.version>3.10.1</omnifaces.version>
         <javax.mail.version>1.6.2</javax.mail.version>
-        <hibernate.version>5.4.30.Final</hibernate.version>
         <deltaspike.version>1.9.4</deltaspike.version>
     </properties>
 
