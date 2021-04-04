@@ -21,7 +21,7 @@
         <faces.version>2.3.9</faces.version>
         <omnifaces.version>3.10.1</omnifaces.version>
         <javax.mail.version>1.6.2</javax.mail.version>
-        <postgres.driver.version>42.2.19</postgres.driver.version>
+        <hibernate.version>5.4.30.Final</hibernate.version>
         <deltaspike.version>1.9.4</deltaspike.version>
     </properties>
 
@@ -45,12 +45,6 @@
             <scope>provided</scope>
         </dependency>
         
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.30.Final</version>
-        </dependency>
-
         <dependency>
             <groupId>br.com.luisfga</groupId>
             <artifactId>jeebase-entities</artifactId>
@@ -83,12 +77,6 @@
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-data-module-impl</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgres.driver.version}</version>
         </dependency>
         
         <dependency>
