@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ImageService {
     
-    @PersistenceContext(unitName = "applicationJpaUnit")
+    @PersistenceContext(unitName = "jeebaseJpaUnit")
     private EntityManager em;
     
     public Image findById(long id){

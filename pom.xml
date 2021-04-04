@@ -17,10 +17,10 @@
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
         <war.plugin.version>3.3.1</war.plugin.version>
         <java.version>11</java.version>
-        <jakartaee-api.version>8.0.0</jakartaee-api.version>
+        <javaee-api.version>8.0.1</javaee-api.version>
         <faces.version>2.3.9</faces.version>
         <omnifaces.version>3.10.1</omnifaces.version>
-        <jakarta-mail.version>1.6.6</jakarta-mail.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
         <postgres.driver.version>42.2.19</postgres.driver.version>
         <deltaspike.version>1.9.4</deltaspike.version>
     </properties>
@@ -39,15 +39,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>${jakartaee-api.version}</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee-api.version}</version>
             <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.30.Final</version>
         </dependency>
 
         <dependency>
             <groupId>br.com.luisfga</groupId>
-            <artifactId>domain-entities</artifactId>
+            <artifactId>jeebase-entities</artifactId>
             <version>1</version>
         </dependency>
             
@@ -86,15 +92,16 @@
         </dependency>
         
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>jakarta.mail</groupId>
-            <artifactId>jakarta.mail-api</artifactId>
-            <version>${jakarta-mail.version}</version>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail.version}</version>
             <scope>provided</scope>
         </dependency>
     

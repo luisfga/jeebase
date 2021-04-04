@@ -5,8 +5,6 @@ import br.com.luisfga.domain.entities.AppRole;
 import br.com.luisfga.domain.entities.AppUser;
 import br.com.luisfga.domain.entities.AppUserOperationWindow;
 import br.com.luisfga.service.repositories.UserRepository;
-import br.com.luisfga.service.events.LoginEvent;
-import br.com.luisfga.service.events.LogoutEvent;
 import br.com.luisfga.service.exceptions.ConfirmationLinkException;
 import br.com.luisfga.service.exceptions.EmailAlreadyTakenException;
 import br.com.luisfga.service.exceptions.ForbidenOperationException;
@@ -20,27 +18,13 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.security.enterprise.AuthenticationStatus;
-import javax.security.enterprise.SecurityContext;
-import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
-import javax.security.enterprise.credential.UsernamePasswordCredential;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Stateless
-public class AuthenticationService {
-    
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
-    
-    @Inject @LoginEvent private Event<String> loginEvent;
-    @Inject @LogoutEvent private Event<String> logoutEvent;
+public class RegistrationService {
     
     @Inject private UserRepository userRepository;
-    @Inject private MailHelper mailHelper;
+    @Inject private MailService mailHelper;
     @Inject private TomEEPbkdf2PasswordHash defaultPasswordService;
     
     public void registerNewUser(AppUser newAppUser) throws EmailAlreadyTakenException {
@@ -78,58 +62,6 @@ public class AuthenticationService {
         AppUser appUser = userRepository.findBy(username);
         appUser.setStatus("ok");//seta status para OK, i.e. CONFIRMADO
         userRepository.save(appUser);
-    }
-    
-    @Inject private SecurityContext securityContext;
-    public AuthenticationStatus login(String username, String password, 
-            HttpServletRequest request, HttpServletResponse response) 
-//            throws LoginException, PendingEmailConfirmationException 
-    {
-        
-        AuthenticationStatus authenticationStatus = securityContext.authenticate(
-                request,response, 
-                AuthenticationParameters.withParams()
-                        .credential(new UsernamePasswordCredential(username, password))
-                        .rememberMe(true)
-        );
-        
-        switch (authenticationStatus) {
-            
-            case SEND_FAILURE:
-                logger.debug("SEND_FAILURE");
-                break;
-            case SEND_CONTINUE:
-                logger.debug("SEND_CONTINUE");
-                loginEvent.fire("User just logged-in: " + username);
-                break;
-            case SUCCESS:
-                logger.debug("SUCCESS");
-                loginEvent.fire("User just logged-in: " + username);
-                break;
-            case NOT_DONE:
-        }
-        
-        return authenticationStatus;
-        
-//        UsernamePasswordToken authToken = new UsernamePasswordToken(username, password);
-//        authToken.setRememberMe(false);
-//        
-//        Subject currentUser = SecurityUtils.getSubject();
-//        try {
-//            currentUser.login(authToken);
-//        } catch ( UnknownAccountException | IncorrectCredentialsException | LockedAccountException | ExcessiveAttemptsException ice ) {
-//            throw new LoginException();
-//        } catch (DisabledAccountException ex){
-//            throw new PendingEmailConfirmationException();
-//        }
-        
-    }
-    
-    public void logout(){
-//        Subject currentUser = SecurityUtils.getSubject();
-//        logger.debug("User logged-out: " + currentUser.getPrincipal());
-//        logoutEvent.fire("User just logged-out: " + currentUser.getPrincipal());
-//        currentUser.logout();
     }
     
     public void prepareRecovery(String username, LocalDate birthday, String token) throws WrongInfoException {

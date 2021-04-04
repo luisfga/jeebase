@@ -44,13 +44,13 @@ public class FloatingMessagesBean implements Serializable{
         this.messages.add(floatingMsg);
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         session.setAttribute(FloatingMessage.MESSAGES_LIST_SESSION_KEY, this.messages);
-        logger.debug("Executor service? " + applicationScheduledExecutorService);
+        logger.trace("Executor service ok? " + applicationScheduledExecutorService);
 
         //tomee managed executor null after development hot reload (happens only in devel)
         if(applicationScheduledExecutorService != null){
             applicationScheduledExecutorService.schedule(() -> {
                 messages.remove(floatingMsg);
-                logger.debug("Executing scheduled task.");
+                logger.trace("Executing scheduled task.");
             }, floatingMsg.getTimeToLive(), TimeUnit.MILLISECONDS);
         }
 

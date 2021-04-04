@@ -1,17 +1,19 @@
 package br.com.luisfga.controller.jsf;
 
+import br.com.luisfga.controller.jsf.secure.UserSessionBean;
 import br.com.luisfga.controller.jsf.util.ResourceBean;
 import br.com.luisfga.controller.jsf.util.LocaleBean;
 import br.com.luisfga.controller.jsf.util.FloatingMessage;
 import br.com.luisfga.controller.jsf.util.FloatingMessagesBean;
 import br.com.luisfga.domain.entities.AppUser;
-import br.com.luisfga.service.AuthenticationService;
+import br.com.luisfga.service.RegistrationService;
 import br.com.luisfga.service.exceptions.ConfirmationLinkException;
 import br.com.luisfga.service.exceptions.EmailAlreadyTakenException;
 import br.com.luisfga.service.exceptions.ForbidenOperationException;
 import br.com.luisfga.service.exceptions.InvalidDataException;
 import br.com.luisfga.service.exceptions.TimeHasExpiredException;
 import br.com.luisfga.service.exceptions.WrongInfoException;
+import br.com.luisfga.service.secure.UserService;
 import java.io.IOException;
 
 import java.util.StringTokenizer;
@@ -27,6 +29,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -38,12 +42,14 @@ public class AuthenticationBean {
     
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationBean.class);
 
-    @Inject private AuthenticationService authenticationService;
+    @Inject private RegistrationService authenticationService;
     @Inject private LocaleBean localeBean;
     @Inject private ResourceBean resourceBean;
     @Inject private FloatingMessagesBean floatingMessagesBean;
 
     @Inject private SecurityContext securityContext;
+    @Inject private UserService userService;
+    @Inject private UserSessionBean userSessionBean;
 
     //regitration
     private AppUser appUser;
@@ -164,36 +170,63 @@ public class AuthenticationBean {
         floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, successMessage, 4000));
         return "login";
     }
-    public String login() throws IOException {
-        logger.debug("NO INÍCIO - securityContext.getCallerPrincipal(): " + securityContext.getCallerPrincipal());
-        
+
+    public void login() throws IOException {
+        logger.trace("Início de Login. Caller Principal? -> " + securityContext.getCallerPrincipal());
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-        
-        AuthenticationStatus status = authenticationService.login(appUser.getUsername(), appUser.getPassword(), request, response);
-        if(null == status){
-            floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, "Login inválido", 10000));
-        } else switch (status) {
-            case SEND_CONTINUE:
-                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, "Login bem sucedido", 10000));
-                facesContext.responseComplete();
-                return "/secure/dashboard?faces-redirect=true";
 
+        AuthenticationStatus status = securityContext.authenticate(
+                request,response, AuthenticationParameters.withParams()
+                        .credential(new UsernamePasswordCredential(this.appUser.getUsername(), this.appUser.getPassword()))
+                        .newAuthentication(true)
+        );
+
+        switch (status) {
             case SUCCESS:
-                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.INFO, "Login bem sucedido", 10000));
-                return "/secure/dashboard?faces-redirect=true";
+                //verificar pendência de confirmação por email
+                AppUser loggingUser = userService.loadUser(this.appUser.getUsername());
 
-            default:
-                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, "Login inválido", 10000));
+                //se status = new, significa que ainda não confirmou por email
+                if(loggingUser.getStatus().equals("new")) {
+                    String errorMessage = resourceBean.getMsgText("global", "action.error.pending.email.confirmation");
+                    floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, errorMessage, 15000));
+
+                    //Enviar username para o usuário
+                    authenticationService.sendMailForNewUserConfirmation(this.appUser.getUsername(), localeBean.getLocale());
+                    
+                    logger.trace("Cancelando login. Email de confirmação pendente -> " + securityContext.getCallerPrincipal().getName());
+                    logout();
+                    
+                //senão, está tudo ok
+                } else {
+                    logger.trace("Login bem sucedido -> " + securityContext.getCallerPrincipal().getName());
+                    userSessionBean.setAppUser(loggingUser);
+                    if(from != null)
+                        FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath()+from);
+                    else
+                        facesContext.getExternalContext().redirect(request.getContextPath()+"/secure/dashboard");
+                }
                 break;
+
+            case SEND_FAILURE:
+                String errorMessage = resourceBean.getMsgText("global", "action.error.authentication.exception");
+                floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, errorMessage, 7000));
+                break;
+
+            case SEND_CONTINUE:
+                logger.error("Tentativa de login retornou SEND_CONTINUE. Sendo que todo login é 'newAuthentication=true', esse caso não deveria ocorrer.");
+                break;
+
         }
-        return "/auth/login";
+        
     }
     
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/index?faces-redirect=true";
+        logger.trace("Logout -> " + securityContext.getCallerPrincipal().getName());
+        return "/index?faces-redirect=true"; 
     }
     public String recoverPassword() {
         this.windowToken = UUID.randomUUID().toString();

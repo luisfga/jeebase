@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 public class EntityManagerProducer{
     
     //or manual bootstrapping
-    @PersistenceContext(unitName = "applicationJpaUnit")
+    @PersistenceContext(unitName = "jeebaseJpaUnit")
     private EntityManager em;
 
     @Produces

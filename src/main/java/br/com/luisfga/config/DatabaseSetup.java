@@ -30,7 +30,7 @@ public class DatabaseSetup implements ServletContextListener {
     @Resource
     private UserTransaction tx;
 
-    @PersistenceUnit(unitName = "applicationJpaUnit")
+    @PersistenceUnit(unitName = "jeebaseJpaUnit")
     private EntityManagerFactory emf;
     
     @Inject
@@ -80,21 +80,19 @@ public class DatabaseSetup implements ServletContextListener {
             admin.setName("admin");
             admin.setBirthday(LocalDate.now());
             admin.setStatus("ok");
+            
+            Set<AppRole> adminRoles = new HashSet<>();
+            basicRoles.forEach((basicRoleName) -> {
+                adminRoles.add(configService.findRole(basicRoleName));
+            });
+            
+            admin.setRoles(adminRoles);
             configService.saveUser(admin);
-            logger.info("Admin user created");
+            logger.info("ADMIN USER CREATED with roles " + basicRoles);
         } else {
             logger.info("Admin user found.");
         }
         
-        //check admin user roles
-        Set<String> adminRoles = new HashSet<>();
-        admin.getRoles().stream().forEach((appRole) -> { adminRoles.add(appRole.getRoleName()); });
-        for (String basicRole : basicRoles) {
-            if(!adminRoles.contains(basicRole)) {
-                configService.addRoleToUser(basicRole, admin);
-                logger.info("Role " + basicRole + " added to " + admin.getUsername());
-            }
-        }
         logger.info("Everything seams ok");
         
     }

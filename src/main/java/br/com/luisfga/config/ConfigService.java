@@ -7,9 +7,9 @@ package br.com.luisfga.config;
 
 import br.com.luisfga.domain.entities.AppRole;
 import br.com.luisfga.domain.entities.AppUser;
+import br.com.luisfga.service.repositories.UserRepository;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -18,20 +18,19 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ConfigService {
     
-    @PersistenceContext(unitName = "applicationJpaUnit")
-    private EntityManager em;
+    @Inject
+    private UserRepository userRepositoty;
 
     public void saveRole(AppRole appRole){
-        em.persist(appRole);
+        userRepositoty.saveAppRole(appRole);
+    }
+    
+    public AppRole findRole(String roleName){
+        return userRepositoty.findRoleByName(roleName);
     }
     
     public void saveUser(AppUser appUser){
-        em.persist(appUser);
+        userRepositoty.save(appUser);
     }
     
-    public void addRoleToUser(String roleName, AppUser appUser){
-        AppRole appRole = em.find(AppRole.class, roleName);
-        appUser.getRoles().add(appRole);
-        em.merge(appUser);
-    }
 }

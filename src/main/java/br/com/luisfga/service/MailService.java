@@ -6,11 +6,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.concurrent.ManagedScheduledExecutorService;
 import javax.inject.Inject;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -27,13 +28,13 @@ import javax.persistence.PersistenceContext;
 
 
 @Stateless
-public class MailHelper {
+public class MailService {
 
-    @PersistenceContext(unitName = "applicationJpaUnit")
+    @PersistenceContext(unitName = "jeebaseJpaUnit")
     private EntityManager em;
     
-    @Resource
-    private Session applicationMailSession;
+    @Resource(lookup = "java:/mail/jeebaseMailSession")
+    private Session jeebaseMailSession;
     
     @Inject 
     @Property("app.name")
@@ -51,11 +52,14 @@ public class MailHelper {
     @Property("auth.pages.preffix")
     private String authPagesPreffix;
     
+    @Resource 
+    private transient ManagedScheduledExecutorService applicationScheduledExecutorService;
+    
     public void enviarEmailConfirmacaoNovoUsuario(String username, Locale locale) {
         try {
             enviarEmail(username, locale, "confirmation.email.subject", "confirmation.email.message", getParametrosEmailConfirmacao(username));
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(MailHelper.class.getName()).log(Level.SEVERE, "Erro ao pegar parâmetros para o email de confirmação de nova conta", ex);
+            Logger.getLogger(MailService.class.getName()).log(Level.SEVERE, "Erro ao pegar parâmetros para o email de confirmação de nova conta", ex);
         }
     }
     
@@ -63,12 +67,12 @@ public class MailHelper {
         try {
             enviarEmail(username, locale, "password.reset.email.subject", "password.reset.email.message", getParametrosEmailRedefinicaoSenha(username, windowToken));
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(MailHelper.class.getName()).log(Level.SEVERE, "Erro ao pegar parâmetros para o email de confirmação de nova conta", ex);
+            Logger.getLogger(MailService.class.getName()).log(Level.SEVERE, "Erro ao pegar parâmetros para o email de confirmação de nova conta", ex);
         }
     }    
     
     private void enviarEmail(String username, Locale locale, String subjectKey, String messageKey, Object[] messageParams){
-        Executors.newSingleThreadExecutor().execute(() -> {
+        applicationScheduledExecutorService.schedule(() -> {
             
             ResourceBundle bundle = ResourceBundle.getBundle("mail", locale);
             
@@ -76,9 +80,9 @@ public class MailHelper {
 
                 String messageText = String.format(bundle.getString(messageKey),messageParams);
                 
-                Message message = new MimeMessage(applicationMailSession);
+                Message message = new MimeMessage(jeebaseMailSession);
 
-                message.setFrom(new InternetAddress(applicationMailSession.getProperty("mail.smtp.user"), appName));
+                message.setFrom(new InternetAddress(jeebaseMailSession.getProperty("mail.smtp.user"), appName));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(username));
                 message.setSubject(bundle.getString(subjectKey));
 
@@ -98,7 +102,7 @@ public class MailHelper {
                 //TODO - fazer o que, aqui?
             }
             
-        });
+        },0,TimeUnit.MILLISECONDS);
     }
     
     private String getUserName(String username){
