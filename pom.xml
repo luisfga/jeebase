@@ -45,12 +45,6 @@
         </dependency>
         
         <dependency>
-            <groupId>br.com.luisfga</groupId>
-            <artifactId>jeebase-entities</artifactId>
-            <version>1</version>
-        </dependency>
-            
-        <dependency>
             <groupId>org.omnifaces</groupId>
             <artifactId>omnifaces</artifactId>
             <version>${omnifaces.version}</version>
