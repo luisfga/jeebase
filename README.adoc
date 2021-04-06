@@ -1,12 +1,13 @@
-## JEEBase
+## JEEBase (Wildfly Version)
 
-`mvn clean install tomee:run`
+<pending mavem command>
 
 ### Uber Jar
 
 ----
 mvn clean install tomee:exec
-java -jar target/luisfga-jeebase.jar
+<pending maven build command>
+<pending java run command>
 ----
 
-#JPA #Deltaspike #JSF #SecurityAPI #ActiveMQ #Docker
+#JPA #Deltaspike #JSF #SecurityAPI #Docker
