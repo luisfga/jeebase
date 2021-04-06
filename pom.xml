@@ -18,6 +18,7 @@
         <war.plugin.version>3.3.1</war.plugin.version>
         <java.version>11</java.version>
         <javaee-api.version>8.0.1</javaee-api.version>
+        <tomee.version>8.0.6</tomee.version>
         <faces.version>2.3.9</faces.version>
         <omnifaces.version>3.10.1</omnifaces.version>
         <javax.mail.version>1.6.2</javax.mail.version>
@@ -109,5 +110,58 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!--PERFIS-->
+    <profiles>
+        
+        <!--DESENV-->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomee.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                        <version>${tomee.version}</version>
+                        <configuration>
+                            <tomeeClassifier>${tomee.classifier}</tomeeClassifier>
+                            <context>ROOT</context>
+                            <!-- args para limitar uso de memória e poder rodar no Heroku free tier -->
+                            <args>-Dhttp.port=8080</args>
+                            <libs>
+                                <lib>org.postgresql:postgresql:42.2.19</lib>
+                            </libs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <!--Perfil para buildar pro HEROKU sem o argumento da porta http, que é 'binded' com arg pro jar-->
+        <profile>
+            <id>heroku</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.tomee.maven</groupId>
+                        <artifactId>tomee-maven-plugin</artifactId>
+                        <version>${tomee.version}</version>
+                        <configuration>
+                            <tomeeClassifier>${tomee.classifier}</tomeeClassifier>
+                            <context>ROOT</context>
+                            <!-- args para limitar uso de memória e poder rodar no Heroku free tier -->
+                            <args>-Xss512k -XX:MaxRAM=500m</args>
+                            <libs>
+                                <lib>org.postgresql:postgresql:42.2.19</lib>
+                            </libs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

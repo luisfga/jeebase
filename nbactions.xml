@@ -18,4 +18,16 @@
                 <goal>tomee:run</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-clean install tomee:exec Profile HEROKU</actionName>
+            <displayName>clean install tomee:exec Profile HEROKU</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+                <goal>tomee:exec</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>heroku</activatedProfile>
+            </activatedProfiles>
+        </action>
     </actions>
