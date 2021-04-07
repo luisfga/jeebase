@@ -10,8 +10,16 @@ import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.QueryResult;
 import org.apache.deltaspike.data.api.Repository;
 
+/**
+ *
+ * @author luis
+ */
+
 @Repository
 public abstract class UserRepository extends AbstractFullEntityRepository<AppUser, String>{
+
+    @Query("SELECT au.status FROM AppUser au WHERE au.username = ?1")
+    public abstract String getStatus(String username);
     
     @Query("SELECT ar FROM AppRole ar WHERE ar.roleName IN ('USER')")
     public abstract List<AppRole> findRolesForNewUsers();

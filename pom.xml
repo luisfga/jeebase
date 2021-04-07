@@ -18,11 +18,10 @@
         <war.plugin.version>3.3.1</war.plugin.version>
         <java.version>11</java.version>
         <javaee-api.version>8.0.1</javaee-api.version>
-        <faces.version>2.3.9</faces.version>
         <omnifaces.version>3.10.1</omnifaces.version>
-        <javax.mail.version>1.6.2</javax.mail.version>
-        <hibernate.version>5.4.30.Final</hibernate.version>
+        <javamail.version>1.6.2</javamail.version>
         <deltaspike.version>1.9.4</deltaspike.version>
+        <slf4j.version>1.7.30</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -52,9 +51,9 @@
         </dependency>
     
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa</artifactId>
+            <version>3.1.2</version>
         </dependency>
     
         <!--DELTASPIKE-->
@@ -89,7 +88,7 @@
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
-            <version>${javax.mail.version}</version>
+            <version>${javamail.version}</version>
             <scope>provided</scope>
         </dependency>
     

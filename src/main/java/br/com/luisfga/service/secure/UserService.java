@@ -29,6 +29,10 @@ public class UserService {
         return appUser;
     }
     
+    public String getStatus(String username){
+        return userRepository.getStatus(username);
+    }
+    
     public void saveUser(AppUser appUser){
         userRepository.save(appUser);
     }
