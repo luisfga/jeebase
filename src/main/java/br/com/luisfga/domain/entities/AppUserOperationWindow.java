@@ -26,7 +26,7 @@ public class AppUserOperationWindow implements Serializable {
     private String windowToken;
     
     @NotNull
-    @Column(name="init_time", nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name="init_time", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime initTime;
 
     public AppUser getAppUser() {

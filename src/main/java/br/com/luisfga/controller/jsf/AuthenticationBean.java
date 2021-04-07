@@ -1,12 +1,13 @@
 package br.com.luisfga.controller.jsf;
 
-import br.com.luisfga.controller.jsf.secure.UserSessionBean;
 import br.com.luisfga.controller.jsf.util.ResourceBean;
 import br.com.luisfga.controller.jsf.util.LocaleBean;
 import br.com.luisfga.controller.jsf.util.FloatingMessage;
 import br.com.luisfga.controller.jsf.util.FloatingMessagesBean;
 import br.com.luisfga.domain.entities.AppUser;
 import br.com.luisfga.service.RegistrationService;
+import br.com.luisfga.service.events.LoginEvent;
+import br.com.luisfga.service.events.LogoutEvent;
 import br.com.luisfga.service.exceptions.ConfirmationLinkException;
 import br.com.luisfga.service.exceptions.EmailAlreadyTakenException;
 import br.com.luisfga.service.exceptions.ForbidenOperationException;
@@ -20,6 +21,7 @@ import java.util.StringTokenizer;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Event;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -49,7 +51,9 @@ public class AuthenticationBean {
 
     @Inject private SecurityContext securityContext;
     @Inject private UserService userService;
-    @Inject private UserSessionBean userSessionBean;
+
+    @Inject @LoginEvent private Event<String> loginEvent;
+    @Inject @LogoutEvent private Event<String> logoutEvent;
 
     //regitration
     private AppUser appUser;
@@ -186,10 +190,10 @@ public class AuthenticationBean {
         switch (status) {
             case SUCCESS:
                 //verificar pendência de confirmação por email
-                AppUser loggingUser = userService.loadUser(this.appUser.getUsername());
+                String userStatus = userService.getStatus(this.appUser.getUsername());
 
                 //se status = new, significa que ainda não confirmou por email
-                if(loggingUser.getStatus().equals("new")) {
+                if("new".equals(userStatus)) {
                     String errorMessage = resourceBean.getMsgText("global", "action.error.pending.email.confirmation");
                     floatingMessagesBean.addMessage(new FloatingMessage(FloatingMessage.Severity.ERROR, errorMessage, 15000));
 
@@ -202,7 +206,8 @@ public class AuthenticationBean {
                 //senão, está tudo ok
                 } else {
                     logger.trace("Login bem sucedido -> " + securityContext.getCallerPrincipal().getName());
-                    userSessionBean.setAppUser(loggingUser);
+                    ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).changeSessionId();
+                    loginEvent.fire(this.appUser.getUsername());
                     if(from != null)
                         FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath()+from);
                     else

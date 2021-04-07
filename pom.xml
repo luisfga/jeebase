@@ -19,10 +19,10 @@
         <java.version>11</java.version>
         <javaee-api.version>8.0.1</javaee-api.version>
         <tomee.version>8.0.6</tomee.version>
-        <faces.version>2.3.9</faces.version>
         <omnifaces.version>3.10.1</omnifaces.version>
-        <javax.mail.version>1.6.2</javax.mail.version>
+        <javamail.version>1.6.2</javamail.version>
         <deltaspike.version>1.9.4</deltaspike.version>
+        <slf4j.version>1.7.30</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
-            <version>${javax.mail.version}</version>
+            <version>${javamail.version}</version>
             <scope>provided</scope>
         </dependency>
     
