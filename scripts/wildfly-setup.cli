@@ -1,0 +1,22 @@
+#apenas para registro e exemplo. isso abaixo é feito pelo layer 'postgresql-driver' do galleon 
+#/subsystem=datasources/jdbc-driver=postgresql:add(driver-name="postgresql",driver-module-name="org.postgresql",driver-class-name=org.postgresql.Driver)
+
+#as variáveis a seguir precisam estar no ambiente da máquina pra não precisar dar commit/push em dados sensíveis
+#${env.POSTGRES_DB_HOST}, ${env.JEEBASE_DATABASE}, ${env.POSTGRES_DB_USER}, ${env.POSTGRES_DB_PASSWORD}
+#${env.APP_MAIL_SESSION_HOST}, ${env.APP_MAIL_SESSION_PORT}, ${env.APP_MAIL_SESSION_USERNAME}, ${env.APP_MAIL_SESSION_PASSWORD}
+
+data-source add --name=jeebaseDS\
+    --driver-name=postgresql --jndi-name=java:/jdbc/jeebaseDS\
+    --connection-url=jdbc:postgresql://${env.POSTGRES_DB_HOST}/${env.JEEBASE_DATABASE}\
+    --user-name=${env.POSTGRES_DB_USER}\
+    --password=${env.POSTGRES_DB_PASSWORD} --enabled=true
+
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=my-smtp:add(host=${env.APP_MAIL_SESSION_HOST}, port=${env.APP_MAIL_SESSION_PORT})
+
+/subsystem=mail/mail-session=jeebaseMailSession:add(jndi-name=java:/mail/jeebaseMailSession, from=LuísFGA, debug=false)
+
+/subsystem=mail/mail-session=jeebaseMailSession/server=smtp:add(outbound-socket-binding-ref=my-smtp, username=${env.APP_MAIL_SESSION_USERNAME}, password=${env.APP_MAIL_SESSION_PASSWORD}, ssl=false, tls=true)
+
+#teoricamente isso deveria ser feito por padrão pelo plugin do wildfly (como já vem por padrão na instalação normal), mas no 'bootable-jar' não estava gerando isso, então aí está
+/subsystem=security/security-domain=jboss-ejb-policy/:add(cache-type=default)
+/subsystem=security/security-domain=jboss-ejb-policy/authorization=classic:add(policy-modules=[{"code"=>"Delegating", "flag"=>"required"}])

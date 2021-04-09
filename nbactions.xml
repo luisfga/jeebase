@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
         <action>
-            <actionName>CUSTOM-clean install tomee:exec</actionName>
-            <displayName>clean install tomee:exec</displayName>
+        <actionName>CUSTOM-mvn clean package</actionName>
+        <displayName>mvn clean package</displayName>
             <goals>
                 <goal>clean</goal>
-                <goal>install</goal>
-                <goal>tomee:exec</goal>
+            <goal>package</goal>
             </goals>
         </action>
         <action>
-            <actionName>CUSTOM-clean install tomee:run</actionName>
-            <displayName>clean install tomee:run</displayName>
+        <actionName>CUSTOM-mvn wildfly-jar:dev-watch -Pdebug</actionName>
+        <displayName>wildfly-jar dev WATCH DEBUG</displayName>
             <goals>
-                <goal>clean</goal>
-                <goal>install</goal>
-                <goal>tomee:run</goal>
+            <goal>wildfly-jar:dev-watch -Pdebug</goal>
             </goals>
         </action>
+    <action>
+        <actionName>CUSTOM-mvn clean package -Pbootable-jar</actionName>
+        <displayName>BOOTABLE JAR</displayName>
+        <goals>
+            <goal>clean package -Pbootable-jar</goal>
+        </goals>
+    </action>
     </actions>
