@@ -23,6 +23,9 @@
         <deltaspike.version>1.9.4</deltaspike.version>
         <slf4j.version>1.7.30</slf4j.version>
         <postgres.driver.version>42.2.19</postgres.driver.version>
+        <wildfly.jar.plugin.version>4.0.2.Final</wildfly.jar.plugin.version>
+        <wildfly.feature.pack.location>wildfly@maven(org.jboss.universe:community-universe)#23.0.0.Final</wildfly.feature.pack.location>
+        <wildfly.galleon.version>1.2.3.Final</wildfly.galleon.version>
     </properties>
 
     <dependencyManagement>
@@ -130,16 +133,16 @@
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-jar-maven-plugin</artifactId>
-                        <version>4.0.2.Final</version>
+                        <version>${wildfly.jar.plugin.version}</version>
                         <configuration>
                             <feature-packs>
                                 <feature-pack>
-                                    <location>wildfly@maven(org.jboss.universe:community-universe)#22.0.0.Final</location>
+                                    <location>${wildfly.feature.pack.location}</location>
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>org.wildfly</groupId>
                                     <artifactId>wildfly-datasources-galleon-pack</artifactId>
-                                    <version>1.2.3.Final</version>
+                                    <version>${wildfly.galleon.version}</version>
                                 </feature-pack>
                             </feature-packs>
                             <layers>
@@ -189,16 +192,16 @@
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-jar-maven-plugin</artifactId>
-                        <version>4.0.2.Final</version>
+                        <version>${wildfly.jar.plugin.version}</version>
                         <configuration>
                             <feature-packs>
                                 <feature-pack>
-                                    <location>wildfly@maven(org.jboss.universe:community-universe)#22.0.0.Final</location>
+                                    <location>${wildfly.feature.pack.location}</location>
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>org.wildfly</groupId>
                                     <artifactId>wildfly-datasources-galleon-pack</artifactId>
-                                    <version>1.2.3.Final</version>
+                                    <version>${wildfly.galleon.version}</version>
                                 </feature-pack>
                             </feature-packs>
                             <layers>

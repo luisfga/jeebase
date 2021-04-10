@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
-        <action>
+    <action>
         <actionName>CUSTOM-mvn clean package</actionName>
         <displayName>mvn clean package</displayName>
-            <goals>
-                <goal>clean</goal>
+        <goals>
+            <goal>clean</goal>
             <goal>package</goal>
-            </goals>
-        </action>
-        <action>
+        </goals>
+    </action>
+    <action>
         <actionName>CUSTOM-mvn wildfly-jar:dev-watch -Pdebug</actionName>
         <displayName>wildfly-jar dev WATCH DEBUG</displayName>
-            <goals>
-            <goal>wildfly-jar:dev-watch -Pdebug</goal>
-            </goals>
-        </action>
+        <goals>
+            <goal>wildfly-jar:dev-watch</goal>
+        </goals>
+        <activatedProfiles>
+            <activatedProfile>debug</activatedProfile>
+        </activatedProfiles>
+    </action>
     <action>
         <actionName>CUSTOM-mvn clean package -Pbootable-jar</actionName>
         <displayName>BOOTABLE JAR</displayName>
         <goals>
-            <goal>clean package -Pbootable-jar</goal>
+            <goal>clean</goal>
+            <goal>package</goal>
         </goals>
+        <activatedProfiles>
+            <activatedProfile>bootable-jar</activatedProfile>
+        </activatedProfiles>
     </action>
-    </actions>
+
+</actions>
