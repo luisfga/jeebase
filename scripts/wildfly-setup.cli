@@ -12,9 +12,7 @@ data-source add --name=jeebaseDS\
     --password=${env.POSTGRES_DB_PASSWORD} --enabled=true
 
 /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=my-smtp:add(host=${env.APP_MAIL_SESSION_HOST}, port=${env.APP_MAIL_SESSION_PORT})
-
 /subsystem=mail/mail-session=jeebaseMailSession:add(jndi-name=java:/mail/jeebaseMailSession, from=LuísFGA, debug=false)
-
 /subsystem=mail/mail-session=jeebaseMailSession/server=smtp:add(outbound-socket-binding-ref=my-smtp, username=${env.APP_MAIL_SESSION_USERNAME}, password=${env.APP_MAIL_SESSION_PASSWORD}, ssl=false, tls=true)
 
 #teoricamente isso deveria ser feito por padrão pelo plugin do wildfly (como já vem por padrão na instalação normal), mas no 'bootable-jar' não estava gerando isso, então aí está

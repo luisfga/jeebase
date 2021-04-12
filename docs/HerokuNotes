@@ -1,0 +1,7 @@
+Parar fazer o "bind" da porta aleatória do Heroku com a interface e porta http do wildfly
+
+    $ java -jar target\jeebase-bootable.jar -b=0.0.0.0 -Djboss.http.port=$PORT
+
+No modo 'late-setup', para configurar os "resources" durante o startup e não no tempo de compilação
+
+    $ java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli -b=0.0.0.0 -Djboss.http.port=$PORT

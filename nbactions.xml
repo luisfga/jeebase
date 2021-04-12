@@ -12,14 +12,33 @@
         <actionName>CUSTOM-mvn wildfly-jar:dev-watch -Pdebug</actionName>
         <displayName>wildfly-jar dev WATCH DEBUG</displayName>
             <goals>
-            <goal>wildfly-jar:dev-watch -Pdebug</goal>
+            <goal>wildfly-jar:dev-watch</goal>
             </goals>
+        <activatedProfiles>
+            <activatedProfile>debug</activatedProfile>
+        </activatedProfiles>
         </action>
     <action>
         <actionName>CUSTOM-mvn clean package -Pbootable-jar</actionName>
         <displayName>BOOTABLE JAR</displayName>
         <goals>
-            <goal>clean package -Pbootable-jar</goal>
+            <goal>clean</goal>
+            <goal>package</goal>
         </goals>
+        <activatedProfiles>
+            <activatedProfile>bootable-jar</activatedProfile>
+        </activatedProfiles>
     </action>
+    <action>
+        <actionName>CUSTOM-mvn clean package -Plate-setup-bootable-jar</actionName>
+        <displayName>LATE SETUP Bootable Jar</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal>
+        </goals>
+        <activatedProfiles>
+            <activatedProfile>late-setup-bootable-jar</activatedProfile>
+        </activatedProfiles>
+    </action>
+
     </actions>

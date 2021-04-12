@@ -23,6 +23,10 @@
         <deltaspike.version>1.9.4</deltaspike.version>
         <slf4j.version>1.7.30</slf4j.version>
         <postgres.driver.version>42.2.19</postgres.driver.version>
+        <openjpa.version>3.1.2</openjpa.version>
+        <wildfly.jar.plugin.version>4.0.2.Final</wildfly.jar.plugin.version>
+        <wildfly.feature.pack.location>wildfly@maven(org.jboss.universe:community-universe)#23.0.0.Final</wildfly.feature.pack.location>
+        <wildfly.galleon.version>1.2.3.Final</wildfly.galleon.version>
     </properties>
 
     <dependencyManagement>
@@ -51,18 +55,6 @@
             <version>${omnifaces.version}</version>
         </dependency>
     
-        <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa</artifactId>
-            <version>3.1.2</version>
-        </dependency>
-    
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgres.driver.version}</version>
-        </dependency>
-    
         <!--DELTASPIKE-->
         <dependency><!--CORE-->
             <groupId>org.apache.deltaspike.core</groupId>
@@ -84,6 +76,19 @@
             <artifactId>deltaspike-data-module-impl</artifactId>
             <scope>runtime</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa</artifactId>
+            <version>${openjpa.version}</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgres.driver.version}</version>
+        </dependency>
+    
         
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -130,16 +135,16 @@
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-jar-maven-plugin</artifactId>
-                        <version>4.0.2.Final</version>
+                        <version>${wildfly.jar.plugin.version}</version>
                         <configuration>
                             <feature-packs>
                                 <feature-pack>
-                                    <location>wildfly@maven(org.jboss.universe:community-universe)#22.0.0.Final</location>
+                                    <location>${wildfly.feature.pack.location}</location>
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>org.wildfly</groupId>
                                     <artifactId>wildfly-datasources-galleon-pack</artifactId>
-                                    <version>1.2.3.Final</version>
+                                    <version>${wildfly.galleon.version}</version>
                                 </feature-pack>
                             </feature-packs>
                             <layers>
@@ -159,9 +164,6 @@
                                     </scriptFiles>
                                 </cliSession>
                             </cliSessions>
-                            <plugin-options>
-                                <jboss-fork-embedded>false</jboss-fork-embedded>
-                            </plugin-options>
                             <jvmArguments>
                                 <arg>-agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=n</arg>
                             </jvmArguments>
@@ -189,16 +191,16 @@
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-jar-maven-plugin</artifactId>
-                        <version>4.0.2.Final</version>
+                        <version>${wildfly.jar.plugin.version}</version>
                         <configuration>
                             <feature-packs>
                                 <feature-pack>
-                                    <location>wildfly@maven(org.jboss.universe:community-universe)#22.0.0.Final</location>
+                                    <location>${wildfly.feature.pack.location}</location>
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>org.wildfly</groupId>
                                     <artifactId>wildfly-datasources-galleon-pack</artifactId>
-                                    <version>1.2.3.Final</version>
+                                    <version>${wildfly.galleon.version}</version>
                                 </feature-pack>
                             </feature-packs>
                             <layers>
@@ -218,9 +220,57 @@
                                     </scriptFiles>
                                 </cliSession>
                             </cliSessions>
-                            <plugin-options>
-                                <jboss-fork-embedded>false</jboss-fork-embedded>
-                            </plugin-options>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <!--Para utilizar cli scripts no startup e não no build-time. Para deploy em servidor remoto, tipo cláudia-->
+        <profile>
+            <id>late-setup-bootable-jar</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <finalName>jeebase</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-jar-maven-plugin</artifactId>
+                        <version>${wildfly.jar.plugin.version}</version>
+                        <configuration>
+                            <feature-packs>
+                                <feature-pack>
+                                    <location>${wildfly.feature.pack.location}</location>
+                                </feature-pack>
+                                <feature-pack>
+                                    <groupId>org.wildfly</groupId>
+                                    <artifactId>wildfly-datasources-galleon-pack</artifactId>
+                                    <version>${wildfly.galleon.version}</version>
+                                </feature-pack>
+                            </feature-packs>
+                            <layers>
+                                <layer>jaxrs-server</layer>
+                                <layer>ejb-lite</layer>
+                                <layer>jpa</layer>
+                                <layer>jsf</layer>
+                                <layer>ee-security</layer>
+                                <layer>legacy-security</layer>
+                                <layer>mail</layer>
+                                <layer>postgresql-driver</layer>
+                            </layers>
+                            <jvmArguments>
+                                <!-- args para limitar uso de memória e poder rodar no Heroku free tier -->
+                                <arg>-Xmx128M -Xms64M -Xss512k -XX:MaxRAM=128M</arg>
+                            </jvmArguments>
                         </configuration>
                         <executions>
                             <execution>
