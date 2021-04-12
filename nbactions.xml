@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
-        <action>
+    <action>
         <actionName>CUSTOM-mvn clean package</actionName>
         <displayName>mvn clean package</displayName>
-            <goals>
-                <goal>clean</goal>
+        <goals>
+            <goal>clean</goal>
             <goal>package</goal>
-            </goals>
-        </action>
-        <action>
+        </goals>
+    </action>
+    <action>
         <actionName>CUSTOM-mvn wildfly-jar:dev-watch -Pdebug</actionName>
         <displayName>wildfly-jar dev WATCH DEBUG</displayName>
             <goals>
@@ -40,5 +40,4 @@
             <activatedProfile>late-setup-bootable-jar</activatedProfile>
         </activatedProfiles>
     </action>
-
-    </actions>
+</actions>
