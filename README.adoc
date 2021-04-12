@@ -10,3 +10,5 @@ java -jar target/luisfga-jeebase.jar
 ----
 
 #JPA #Deltaspike #JSF #SecurityAPI #Docker
+
+https://github.com/luisfga/jeebase[Branch da versão pro WildFly 23]
