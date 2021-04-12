@@ -18,3 +18,5 @@ java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
 
 #JPA #Deltaspike #JSF #SecurityAPI #Docker
 #CDI #JPA #JSF (+custom component taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #JEESecurityAPI #Javascript #CSS
+
+https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
