@@ -7,9 +7,9 @@
 
 data-source add --name=jeebaseDS\
     --driver-name=postgresql --jndi-name=java:/jdbc/jeebaseDS\
-    --connection-url=jdbc:postgresql://${env.POSTGRES_DB_HOST}/${env.JEEBASE_DATABASE}\
-    --user-name=${env.POSTGRES_DB_USER}\
-    --password=${env.POSTGRES_DB_PASSWORD} --enabled=true
+    --connection-url=jdbc:postgresql://${env.DB_HOST}/${env.JEEBASE_DATABASE}\
+    --user-name=${env.DB_USER}\
+    --password=${env.DB_PASSWORD} --enabled=true
 
 /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=my-smtp:add(host=${env.APP_MAIL_SESSION_HOST}, port=${env.APP_MAIL_SESSION_PORT})
 /subsystem=mail/mail-session=jeebaseMailSession:add(jndi-name=java:/mail/jeebaseMailSession, from=LuísFGA, debug=false)
