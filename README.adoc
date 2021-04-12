@@ -20,10 +20,10 @@ java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
 #### Obs
 
 ##### (1) Precisa das seguintes variáveis de ambiente
-[small]*${DB_HOST}, ${JEEBASE_DATABASE}, ${DB_USER} e ${DB_PASSWORD}*
+DB_HOST, DB_USER, DB_PASSWORD e JEEBASE_DATABASE
 
 ##### (2) O registro de usuário precisa das seguintes variáveis no ambiente
-${APP_MAIL_SESSION_HOST}, ${APP_MAIL_SESSION_PORT}, ${APP_MAIL_SESSION_USERNAME}, ${APP_MAIL_SESSION_PASSWORD}
+APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME, APP_MAIL_SESSION_PASSWORD
 
 [footer]
 Contém: CDI, JPA, JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, JEESecurityAPI, Javascript, CSS
