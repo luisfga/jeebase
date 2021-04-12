@@ -1,13 +1,20 @@
 ## JEEBase (Wildfly Version)
 
-<pending mavem command>
-
-### Uber Jar
-
+WildFly no modo debug e dev-watch (auto deploy on save)
 ----
-mvn clean install tomee:exec
-<pending maven build command>
-<pending java run command>
+mvn clean package -Pdebug
+----
+
+Para gerar um jar executável
+----
+mvn clean package -Pbootable-jar
+----
+
+Para gerar um jar executável dependente de um cli-script a ser executado no startup, para configuração tardia.
+----
+mvn clean package -Plate-setup-bootable-jar
+java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
 ----
 
 #JPA #Deltaspike #JSF #SecurityAPI #Docker
+#CDI #JPA #JSF (+custom component taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #JEESecurityAPI #Javascript #CSS
