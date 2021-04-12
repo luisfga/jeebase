@@ -9,6 +9,6 @@ mvn clean install tomee:exec
 java -jar target/luisfga-jeebase.jar
 ----
 
-#JPA #Deltaspike #JSF #SecurityAPI #Docker
+#JPA #Deltaspike #JSF #SecurityAPI #Docker #CDI #JPA #JSF (+custom component taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #JEESecurityAPI #Javascript #CSS
 
 https://github.com/luisfga/jeebase[Branch da versão pro WildFly 23]
