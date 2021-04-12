@@ -1,1 +1,0 @@
-web: java -jar target/jeebase-exec.jar run
