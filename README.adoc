@@ -1,13 +1,27 @@
-## JEEBase (Wildfly Version)
+## JEEBase (Wildfly Version) 
 
-<pending mavem command>
-
-### Uber Jar
-
+WildFly no modo debug e dev-watch (auto deploy on save)
 ----
-mvn clean install tomee:exec
-<pending maven build command>
-<pending java run command>
+mvn clean package -Pdebug
 ----
 
-#JPA #Deltaspike #JSF #SecurityAPI #Docker
+Para gerar um jar executável
+----
+mvn clean package -Pbootable-jar
+java -jar target\jeebase-bootable.jar
+----
+
+Para gerar um jar executável dependente de um cli-script a ser executado no startup, para configuração tardia.
+----
+mvn clean package -Plate-setup-bootable-jar
+java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
+----
+
+### Obs
+1. Precisa das seguintes variáveis de ambiente: DB_HOST, DB_USER, DB_PASSWORD e JEEBASE_DATABASE. +
+2. O registro de usuário precisa das seguintes variáveis no ambiente: APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME e APP_MAIL_SESSION_PASSWORD.
+
+##### Contém 
+CDI, JPA, JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, JEESecurityAPI, Javascript, CSS
+
+https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
