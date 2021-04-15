@@ -1,3 +1,4 @@
 <jboss-web>
-  <security-domain>jaspitest</security-domain>
+    <context-root>jeebase</context-root>
+    <security-domain>jaspitest</security-domain>
 </jboss-web>
