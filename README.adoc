@@ -1,4 +1,4 @@
-## JEEBase (Payara4.1.2.181 Version [JEE7]) 
+## JEEBase (Payara 4 Version) JEE7
 
 ### Requisitos pre-deploy
 1. Precisa de um datasource chamado jdbc/jee7basedb
