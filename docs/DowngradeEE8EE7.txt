@@ -1,0 +1,6 @@
+﻿Principais Mudanças Downgrade JEE8 para JEE7
+
+- mudança da versão do JSF, 2.3 para 2.2
+- mudança do openjpa para o hibernate 5.2 (jpa 2.1)
+- mudando da versão do omnifaces, da versão 3 (cdi 2.0) pra 2 (cdi 1.1)
+- Alterações de anotações do BeanValidation 2.0 para a versão 1.1, e.g. @NotEmpty para apenas @NotNull

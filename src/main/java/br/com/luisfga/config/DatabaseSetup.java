@@ -121,4 +121,9 @@ public class DatabaseSetup implements ServletContextListener {
         }
         
     }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent arg0) {
+        
+    }
 }

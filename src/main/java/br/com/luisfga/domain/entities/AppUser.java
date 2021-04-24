@@ -16,9 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -26,14 +23,13 @@ import javax.validation.constraints.NotNull;
 public class AppUser implements Serializable {
     
     @Id
-    @Email
     private String username;
     
-    @NotBlank
+    @NotNull
     @Column(nullable = false)
     private String password;
     
-    @NotBlank
+    @NotNull
     private String name;
     
     private byte[] thumbnail;
@@ -48,7 +44,7 @@ public class AppUser implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
     
-    @NotEmpty
+    @NotNull
     private String status;
     
     @OneToOne(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.ALL)

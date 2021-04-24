@@ -6,7 +6,7 @@ import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 
 @DatabaseIdentityStoreDefinition(
-        dataSourceLookup = "java:/jdbc/jeebaseDS",
+        dataSourceLookup = "jdbc/jee7baseDS",
         callerQuery = "select password from app_user where username = ?",
         groupsQuery = "select role_name from user_role where username = ?",
         hashAlgorithm = TomEEPbkdf2PasswordHash.class,
