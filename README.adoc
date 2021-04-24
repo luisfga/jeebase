@@ -1,10 +1,11 @@
 ## JEEBase (Payara4.1.2.181 Version [JEE7]) 
 
-### Obs
+### Requisitos pre-deploy
 1. Precisa de um datasource chamado jdbc/jee7basedb
 2. Precisa de uma sessão java mail chamada mail/jeebaseMailSession
 
-Alterações que foram necessárias no downgrade para JEE7
+### Downgrade para JEE7
+
 - mudança da versão do JSF, 2.3 para 2.2
 - mudança do openjpa para o hibernate 5.2 (jpa 2.1)
     *razão da mudança: openjpa.jdbc.SynchronizeMappings não funciona com o payara4, apesar de funcionar perfeitamente no TomEE e WildFly. Não sei o porquê.
@@ -12,8 +13,8 @@ Alterações que foram necessárias no downgrade para JEE7
 - Alterações de anotações do BeanValidation 2.0 para a versão 1.1, e.g. @NotEmpty para apenas @NotNull
 
 ##### Contém 
-CDI, JPA, JSF (+custom taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, JEESecurityAPI(Soteria), Javascript, CSS
-
+#CDI #JPA #JSF (+custom taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #JEESecurityAPI(Soteria) #Javascript #CSS
 
 https://github.com/luisfga/jeebase[Branch da versão pro WildFly] [JEE8]
+
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6] [JEE8]
