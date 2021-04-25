@@ -9,7 +9,7 @@ mvn clean package -Pbootable-jar
 java -jar target\jeebase-bootable.jar
 ----
 
-Para gerar um jar executável dependente de um cli-script a ser executado no startup, para configuração tardia.
+Para gerar um jar executável dependente de um cli-script a ser executado no startup.
 ----
 mvn clean package -Plate-setup-bootable-jar
 java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
