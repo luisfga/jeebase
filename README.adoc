@@ -15,10 +15,6 @@ mvn clean package -Plate-setup-bootable-jar
 java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
 ----
 
-### Obs
-
-
-##### Contém 
-CDI, JPA, JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, JEESecurityAPI, Javascript, CSS
+#CDI #JPA (Hibernate) #JSF (+custom component taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #SecurityAPI #Javascript #CSS
 
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
