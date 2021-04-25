@@ -12,9 +12,8 @@
 - mudando da versão do omnifaces, da versão 3 (cdi 2.0) pra 2 (cdi 1.1)
 - Alterações de anotações do BeanValidation 2.0 para a versão 1.1, e.g. @NotEmpty para apenas @NotNull
 
-##### Contém 
+https://github.com/luisfga/jeebase[Branch da versão pro WildFly] JEE8
+
+https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6] JEE8
+
 #CDI #JPA #JSF (+custom taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #JEESecurityAPI(Soteria) #Javascript #CSS
-
-https://github.com/luisfga/jeebase[Branch da versão pro WildFly] [JEE8]
-
-https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6] [JEE8]
