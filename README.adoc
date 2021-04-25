@@ -19,4 +19,4 @@ java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
 
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
 
-https://github.com/luisfga/jeebase/tree/payara4[Branch da versão pro Payara 4.1.2.x]
+https://github.com/luisfga/jeebase/tree/payara4[Branch da versão pro Payara 4.1.2.x] (JEE7)
