@@ -129,7 +129,6 @@
                         <configuration>
                             <tomeeClassifier>${tomee.classifier}</tomeeClassifier>
                             <context>ROOT</context>
-                            <!-- args para limitar uso de memória e poder rodar no Heroku free tier -->
                             <args>-Dhttp.port=8080</args>
                             <libs>
                                 <lib>org.postgresql:postgresql:42.2.19</lib>
@@ -140,7 +139,7 @@
             </build>
         </profile>
         
-        <!--Perfil para buildar pro HEROKU sem o argumento da porta http, que é 'binded' com arg pro jar-->
+        <!--Perfil para buildar pro HEROKU sem o argumento da porta http, que é vinculada via argumento na execução do jar-->
         <profile>
             <id>heroku</id>
             <build>

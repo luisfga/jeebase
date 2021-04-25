@@ -93,7 +93,7 @@ public class DatabaseSetup implements ServletContextListener {
             logger.info("Admin user found.");
         }
         
-        logger.info("Everything seams ok");
+        logger.info("Everything seems ok");
         
     }
     
