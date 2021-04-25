@@ -7,17 +7,15 @@
 
     <persistence-unit name="jeebaseJpaUnit" transaction-type="JTA">
 
-        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <jta-data-source>java:/jdbc/jeebaseDS</jta-data-source>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         
         <properties>
-            <property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict"/>
-            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-            <property name="openjpa.TransactionMode" value="managed"/>
-            <property name="openjpa.ManagedRuntime" value="jndi(TransactionManagerName=java:/TransactionManager)"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/> 
         </properties>
         
     </persistence-unit>
