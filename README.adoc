@@ -6,11 +6,12 @@
 
 ### Downgrade para JEE7
 
+- Substituição da API EE Security pelo Soteria 1.0.1.
 - mudança da versão do JSF, 2.3 para 2.2
 - mudança do openjpa para o hibernate 5.2 (jpa 2.1)
     *razão da mudança: openjpa.jdbc.SynchronizeMappings não funciona com o payara4, apesar de funcionar perfeitamente no TomEE e WildFly. Não sei o porquê.
-- mudando da versão do omnifaces, da versão 3 (cdi 2.0) pra 2 (cdi 1.1)
-- Alterações de anotações do BeanValidation 2.0 para a versão 1.1, e.g. @NotEmpty para apenas @NotNull
+- mudança da versão do omnifaces, da versão 3 (cdi 2.0) pra 2 (cdi 1.1)
+- BeanValidation 2.0 para a versão 1.1 e alterações das annotations que não existiam na 1.1, e.g. @NotEmpty para apenas @NotNull
 
 https://github.com/luisfga/jeebase[Branch da versão pro WildFly] JEE8
 
