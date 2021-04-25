@@ -1,9 +1,7 @@
 ## JEEBase (Wildfly Version) 
 
-WildFly no modo debug e dev-watch (auto deploy on save)
-----
-mvn clean package -Pdebug
-----
+- Precisa de uma datasource chamada 'java:/jdbc/jeebaseDS'
+- O registro de usuário precisa das seguintes variáveis no ambiente: APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME e APP_MAIL_SESSION_PASSWORD.
 
 Para gerar um jar executável
 ----
@@ -18,8 +16,7 @@ java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
 ----
 
 ### Obs
-1. Precisa das seguintes variáveis de ambiente: DB_HOST, DB_USER, DB_PASSWORD e JEEBASE_DATABASE. +
-2. O registro de usuário precisa das seguintes variáveis no ambiente: APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME e APP_MAIL_SESSION_PASSWORD.
+
 
 ##### Contém 
 CDI, JPA, JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, JEESecurityAPI, Javascript, CSS
