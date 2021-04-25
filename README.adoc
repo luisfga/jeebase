@@ -1,7 +1,7 @@
 ## JEEBase (Wildfly Version) 
 
 - Precisa de uma datasource chamada 'java:/jdbc/jeebaseDS'
-- O registro de usuário precisa das seguintes variáveis no ambiente: APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME e APP_MAIL_SESSION_PASSWORD.
+- Precisa de uma mail session chamada 'java:/mail/jeebaseMailSession'
 
 Para gerar um jar executável
 ----
