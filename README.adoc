@@ -1,41 +1,9 @@
 ## JEEBase (OpenLiberty Version) 
 
 - Precisa de uma datasource chamada 'jdbc/jeebaseDS'
-
-    Colocar no server.xml:
-
-	<!-- JDBC DRIVERS (criar pasta '<server_dir>/jdbc' e colocar drivers jdbc lá) -->
-	<library id="jdbcLib">
-		<fileset dir="jdbc" includes="*.jar"/>
-	</library>
-	
-	<!-- DATASOURCES (Exemplo pra postgresql. Com esses dados o server já monta a url)-->
-	<dataSource jndiName="jdbc/jeebaseDS">
-		<jdbcDriver libraryRef="jdbcLib"/>
-		<properties serverName="localhost" portNumber="5432"
-					databaseName="<Nome do banco de dados>"
-					user="<Usuário>" password="<Senha>"/>
-	</dataSource>
-
 - Precisa de uma mail session chamada 'mail/jeebaseMailSession'
+* https://github.com/luisfga/jeebase/tree/openliberty/docs/opernliberty-template-server.xml[Template do server.xml]
 
-    Colocar no server.xml:
-
-	<!-- MAIL SESSIONS (exemplo outlook) -->
-	<mailSession mailSessionID="jeebaseMailSession"
-		jndiName="mail/jeebaseMailSession"
-		description="MY JEEBase Mail Session"
-		transportProtocol="smtp"
-		host="smtp.office365.com"
-		user="<some @outlook.com mail addres>"
-		password="<mail secret>"
-		from="MY JEEBase">
-		<property name="mail.smtp.ssl.trust" value="smtp.office365.com"/>
-		<property name="port" value="587"/>
-		<property name="mail.smtp.auth" value="true"/>
-		<property name="mail.smtp.starttls.enable" value="true"/>
-		<property name="mail.debug" value="false"/>
-	</mailSession>
 
 Para gerar um jar executável
 ----
