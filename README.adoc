@@ -15,7 +15,7 @@ Para gerar um jar executável
 TODO
 ----
 
-https://github.com/luisfga/jeebase[Branch da versão pro WildFly 23]
+https://github.com/luisfga/jeebase/tree/wildfly[Branch da versão pro WildFly 23]
 
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
 
