@@ -1,5 +1,7 @@
 ## JEEBase (OpenLiberty Version) 
 
+JEE8, CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, SecurityAPI, Javascript, CSS.
+
 - Precisa de uma datasource chamada 'jdbc/jeebaseDS'
 - Precisa de uma mail session chamada 'mail/jeebaseMailSession'
 - https://github.com/luisfga/jeebase/blob/openliberty/docs/openliberty-template-server.xml[Template do server.xml]
@@ -17,8 +19,6 @@ Para gerar um jar executável dependente de variáveis.
 ----
 TODO
 ----
-
-#JEE8 #CDI #JPA (Hibernate) #JSF (+custom component taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #SecurityAPI #Javascript #CSS
 
 https://github.com/luisfga/jeebase[Branch da versão pro WildFly 23]
 
