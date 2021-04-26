@@ -1,6 +1,6 @@
 ## JEEBase (OpenLiberty Version) 
 
-JEE8, CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, SecurityAPI, Javascript, CSS.
+CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, SecurityAPI, Javascript, CSS.
 
 - Precisa de uma datasource chamada 'jdbc/jeebaseDS'
 - Precisa de uma mail session chamada 'mail/jeebaseMailSession'
