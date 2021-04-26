@@ -50,24 +50,28 @@
     <dataSource jndiName="jdbc/jeebaseDS">
         <jdbcDriver libraryRef="jdbcLib"/>
         <properties serverName="localhost" portNumber="5432"
-                        databaseName="nome do banco"
-                        user="usuário que a app usurá" password="senha desse usuário"/>
+                    databaseName="nome do banco"
+                    user="usuário que a app usuário" password="senha desse usuário"/>
     </dataSource>
 	
-    <!-- MAIL SESSIONS (exemplo outlook) -->
-    <mailSession mailSessionID="jeebaseMailSession"
-                 jndiName="mail/jeebaseMailSession"
-                 description="MY JEEBase Mail Session"
-                 transportProtocol="smtp"
-                 host="smtp.office365.com"
-                 user="alguma email do outlook, e.g. 'meuemail@outlook.com'"
-                 password="password daquele email"
-                 from="MY JEEBase">
-        <property name="mail.smtp.ssl.trust" value="smtp.office365.com"/>
-        <property name="port" value="587"/>
+    <!-- MAIL SESSIONS (exemplo usando o outlook.com. Falta colocar o endereço e a senha)-->
+    <mailSession>
+        <mailSessionID>jeebaseMailSession</mailSessionID>
+        <jndiName>mail/jeebaseMailSession</jndiName>
+        <description>JEEBase Mail Session</description>
+        <transportProtocol>smtp</transportProtocol>
+        <host>smtp.office365.com</host>
+        <user>endereçodoemail@email.com</user>
+        <password>senha da conta de email</password>
+        <from>LuisFGA JEEBase</from>
+        <property name="mail.smtp.port" value="587" />
         <property name="mail.smtp.auth" value="true"/>
         <property name="mail.smtp.starttls.enable" value="true"/>
-        <property name="mail.debug" value="false"/>
+        <property name="mail.smtp.ssl.trust" value="smtp.office365.com"/>
+        <property name="mail.debug" value="true"/>
+        <!-- redundância do 'user' porque a aplicação utiliza essa forma 'mail.smtp.user' para recuperar esse valor.
+        Mantido assim apenas por portabilidade do código e porque funciona dessa forma no TomEE, WildFly e Payara, menos no openliberty -->
+        <property name="mail.smtp.user" value="endereçodoemail@email.com"/>
     </mailSession>
 
 </server>
