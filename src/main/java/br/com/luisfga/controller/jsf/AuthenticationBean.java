@@ -234,9 +234,9 @@ public class AuthenticationBean {
         String loggingOutUser = securityContext.getCallerPrincipal().getName();
         try {
             req.logout();
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             logoutEvent.fire(loggingOutUser);
-        return "/index?faces-redirect=true"; 
+            return "/index?faces-redirect=true"; 
         } catch (ServletException ex) {
             logger.error("Erro ao fazer logout do usuário -> " + loggingOutUser);
     }
