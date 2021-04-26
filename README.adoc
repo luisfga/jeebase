@@ -15,6 +15,8 @@
 
 #JEE7 #CDI #JPA #JSF (+custom taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #JEESecurityAPI(Soteria) #Javascript #CSS
 
+https://github.com/luisfga/jeebase/tree/openliberty[Branch da versão pro OpenLiberty21] JEE8
+
 https://github.com/luisfga/jeebase[Branch da versão pro WildFly] JEE8
 
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6] JEE8
