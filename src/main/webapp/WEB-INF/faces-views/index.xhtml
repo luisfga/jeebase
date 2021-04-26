@@ -10,8 +10,8 @@
             <div class="content-header">
                 <div>
                     <div id="luisfgaSlider">
-                        <ui:repeat value="#{indexView.images}" var="image">
-                            <h:graphicImage name="images/#{image}"/>
+                        <ui:repeat value="#{indexView.images}" var="image" varStatus="vs">
+                            <h:graphicImage name="images/#{image}" alt="Slider image #{vs.index}"/>
                         </ui:repeat>
                     </div>
                 </div>
