@@ -1,21 +1,21 @@
-## JEEBase (Wildfly Version) 
+## JEEBase (OpenLiberty Version) 
 
-- Precisa de uma datasource chamada 'java:/jdbc/jeebaseDS'
-- Precisa de uma mail session chamada 'java:/mail/jeebaseMailSession'
+CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, SecurityAPI, Javascript, CSS.
+
+- Precisa de uma datasource chamada 'jdbc/jeebaseDS'
+- Precisa de uma mail session chamada 'mail/jeebaseMailSession'
+- https://github.com/luisfga/jeebase/blob/openliberty/docs/openliberty-template-server.xml[Template do server.xml]
+- tudo deve funcionar caso utilize o template acima e configure as variáveis de ambiente:
+    DB_HOST, DB_PORT, DB_USER, DB_PASS, JEEBASE_DATABASE, 
+    APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME e APP_MAIL_SESSION_PASSWORD
+
 
 Para gerar um jar executável
 ----
-mvn clean package -Pbootable-jar
-java -jar target\jeebase-bootable.jar
+TODO
 ----
 
-Para gerar um jar executável dependente de um cli-script a ser executado no startup.
-----
-mvn clean package -Plate-setup-bootable-jar
-java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
-----
-
-#JEE8 #CDI #JPA (Hibernate) #JSF (+custom component taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #SecurityAPI #Javascript #CSS
+https://github.com/luisfga/jeebase/tree/wildfly[Branch da versão pro WildFly 23]
 
 https://github.com/luisfga/jeebase/tree/openliberty[Branch da versão pro OpenLiberty21]
 

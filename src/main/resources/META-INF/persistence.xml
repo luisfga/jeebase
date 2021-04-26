@@ -7,15 +7,16 @@
 
     <persistence-unit name="jeebaseJpaUnit" transaction-type="JTA">
 
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
-        <jta-data-source>java:/jdbc/jeebaseDS</jta-data-source>
+        <jta-data-source>jdbc/jeebaseDS</jta-data-source>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         
         <properties>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/> 
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
         </properties>
         
     </persistence-unit>

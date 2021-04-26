@@ -33,7 +33,7 @@ public class MailService {
     @PersistenceContext(unitName = "jeebaseJpaUnit")
     private EntityManager em;
     
-    @Resource(lookup = "java:/mail/jeebaseMailSession")
+    @Resource(lookup = "mail/jeebaseMailSession")
     private Session jeebaseMailSession;
     
     @Inject 
