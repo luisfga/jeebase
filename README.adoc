@@ -3,6 +3,9 @@
 - Precisa de uma datasource chamada 'jdbc/jeebaseDS'
 - Precisa de uma mail session chamada 'mail/jeebaseMailSession'
 * https://github.com/luisfga/jeebase/blob/openliberty/docs/openliberty-template-server.xml[Template do server.xml]
+* tudo deve funcionar usando esse template e configurando as variáveis de ambiente:
+    DB_HOST, DB_PORT, DB_USER, DB_PASS, JEEBASE_DATABASE, 
+    APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME e APP_MAIL_SESSION_PASSWORD
 
 
 Para gerar um jar executável
