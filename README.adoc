@@ -2,7 +2,7 @@
 
 - Precisa de uma datasource chamada 'jdbc/jeebaseDS'
 - Precisa de uma mail session chamada 'mail/jeebaseMailSession'
-* https://github.com/luisfga/jeebase/tree/openliberty/docs/opernliberty-template-server.xml[Template do server.xml]
+* https://github.com/luisfga/jeebase/blob/openliberty/docs/openliberty-template-server.xml[Template do server.xml]
 
 
 Para gerar um jar executável
