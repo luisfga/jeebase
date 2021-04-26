@@ -241,8 +241,6 @@ public class AuthenticationBean {
             logger.error("Erro ao fazer logout do usuário -> " + loggingOutUser);
         }
 
-    }
-        
         return null; 
     }
     public String recoverPassword() {
