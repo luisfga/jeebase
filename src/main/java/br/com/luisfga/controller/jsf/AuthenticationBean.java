@@ -33,6 +33,7 @@ import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.SecurityContext;
 import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -229,9 +230,18 @@ public class AuthenticationBean {
     }
     
     public String logout(){
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String loggingOutUser = securityContext.getCallerPrincipal().getName();
+        try {
+            req.logout();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        logger.trace("Logout -> " + securityContext.getCallerPrincipal().getName());
+            logoutEvent.fire(loggingOutUser);
         return "/index?faces-redirect=true"; 
+        } catch (ServletException ex) {
+            logger.error("Erro ao fazer logout do usuário -> " + loggingOutUser);
+    }
+        
+        return null; 
     }
     public String recoverPassword() {
         this.windowToken = UUID.randomUUID().toString();
