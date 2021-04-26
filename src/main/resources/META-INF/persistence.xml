@@ -7,16 +7,11 @@
 
     <persistence-unit name="jeebaseJpaUnit" transaction-type="JTA">
 
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
-        <jta-data-source>java:/jdbc/jeebaseDS</jta-data-source>
+        <jta-data-source>jdbc/jeebaseDS</jta-data-source>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
-        
-        <properties>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/> 
-        </properties>
         
     </persistence-unit>
     

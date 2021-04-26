@@ -1,21 +1,55 @@
-## JEEBase (Wildfly Version) 
+## JEEBase (OpenLiberty Version) 
 
-- Precisa de uma datasource chamada 'java:/jdbc/jeebaseDS'
-- Precisa de uma mail session chamada 'java:/mail/jeebaseMailSession'
+- Precisa de uma datasource chamada 'jdbc/jeebaseDS'
+
+    Colocar no server.xml:
+
+	<!-- JDBC DRIVERS (criar pasta '<server_dir>/jdbc' e colocar drivers jdbc lá) -->
+	<library id="jdbcLib">
+		<fileset dir="jdbc" includes="*.jar"/>
+	</library>
+	
+	<!-- DATASOURCES (Exemplo pra postgresql. Com esses dados o server já monta a url)-->
+	<dataSource jndiName="jdbc/jeebaseDS">
+		<jdbcDriver libraryRef="jdbcLib"/>
+		<properties serverName="localhost" portNumber="5432"
+					databaseName="<Nome do banco de dados>"
+					user="<Usuário>" password="<Senha>"/>
+	</dataSource>
+
+- Precisa de uma mail session chamada 'mail/jeebaseMailSession'
+
+    Colocar no server.xml:
+
+	<!-- MAIL SESSIONS (exemplo outlook) -->
+	<mailSession mailSessionID="jeebaseMailSession"
+		jndiName="mail/jeebaseMailSession"
+		description="MY JEEBase Mail Session"
+		transportProtocol="smtp"
+		host="smtp.office365.com"
+		user="<some @outlook.com mail addres>"
+		password="<mail secret>"
+		from="MY JEEBase">
+		<property name="mail.smtp.ssl.trust" value="smtp.office365.com"/>
+		<property name="port" value="587"/>
+		<property name="mail.smtp.auth" value="true"/>
+		<property name="mail.smtp.starttls.enable" value="true"/>
+		<property name="mail.debug" value="false"/>
+	</mailSession>
 
 Para gerar um jar executável
 ----
-mvn clean package -Pbootable-jar
-java -jar target\jeebase-bootable.jar
+TODO
 ----
 
-Para gerar um jar executável dependente de um cli-script a ser executado no startup.
+Para gerar um jar executável dependente de variáveis.
 ----
-mvn clean package -Plate-setup-bootable-jar
-java -jar target\jeebase-bootable.jar --cli-script=scripts\wildfly-setup.cli
+TODO
 ----
 
 #JEE8 #CDI #JPA (Hibernate) #JSF (+custom component taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #SecurityAPI #Javascript #CSS
+
+https://github.com/luisfga/jeebase[Branch da versão pro WildFly 23]
 
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
 

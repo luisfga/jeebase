@@ -1,3 +1,0 @@
-data-source add --name=jeebaseDS --driver-name=postgresql --jndi-name=java:/jdbc/jeebaseDS\ 
-    --connection-url=${env.JEEBASE_DS_URL} --user-name=${env.JEEBASE_DS_USER} --password=${env.JEEBASE_DS_PASS}\ 
-    --enabled=true
