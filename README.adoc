@@ -11,6 +11,8 @@ java -jar target/luisfga-jeebase.jar
 
 #JEE8 #CDI #JPA #SecurityAPI #JSF (+custom taglib) #Omnifaces #JAX-RS #EJB-lite #Deltaspike #Docker #Javascript #CSS
 
+https://github.com/luisfga/jeebase/tree/openliberty[Branch da versão pro OpenLiberty21]
+
 https://github.com/luisfga/jeebase[Branch da versão pro WildFly 23]
 
 https://github.com/luisfga/jeebase/tree/payara4[Branch da versão pro Payara 4.1.2.x] #JEE7
