@@ -28,8 +28,8 @@
     
     <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
     <httpEndpoint id="defaultHttpEndpoint"
-                  httpPort="9080"
-                  httpsPort="9443" />
+                  httpPort="8080"
+                  httpsPort="8443" />
                   
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
@@ -49,9 +49,9 @@
     <!-- DATASOURCES (Exemplo pra postgresql. Com esses dados o server já monta a url sozinho)-->
     <dataSource jndiName="jdbc/jeebaseDS">
         <jdbcDriver libraryRef="jdbcLib"/>
-        <properties serverName="localhost" portNumber="5432"
-                    databaseName="nome do banco"
-                    user="usuário que a app usuário" password="senha desse usuário"/>
+        <properties serverName="${DB_HOST}" portNumber="${DB_PORT}"
+                    databaseName="${JEEBASE_DATABASE}"
+                    user="${DB_USER}" password="${DB_PASS}"/>
     </dataSource>
 	
     <!-- MAIL SESSIONS (exemplo usando o outlook.com. Falta colocar o endereço e a senha)-->
@@ -60,18 +60,18 @@
         <jndiName>mail/jeebaseMailSession</jndiName>
         <description>JEEBase Mail Session</description>
         <transportProtocol>smtp</transportProtocol>
-        <host>smtp.office365.com</host>
-        <user>endereçodoemail@email.com</user>
-        <password>senha da conta de email</password>
+        <host>${APP_MAIL_SESSION_HOST}</host>
+        <user>${APP_MAIL_SESSION_USERNAME}</user>
+        <password>${APP_MAIL_SESSION_PASSWORD}</password>
         <from>LuisFGA JEEBase</from>
-        <property name="mail.smtp.port" value="587" />
+        <property name="mail.smtp.port" value="${APP_MAIL_SESSION_PORT}" />
         <property name="mail.smtp.auth" value="true"/>
         <property name="mail.smtp.starttls.enable" value="true"/>
-        <property name="mail.smtp.ssl.trust" value="smtp.office365.com"/>
+        <property name="mail.smtp.ssl.trust" value="${APP_MAIL_SESSION_HOST}"/>
         <property name="mail.debug" value="true"/>
         <!-- redundância do 'user' porque a aplicação utiliza essa forma 'mail.smtp.user' para recuperar esse valor.
         Mantido assim apenas por portabilidade do código e porque funciona dessa forma no TomEE, WildFly e Payara, menos no openliberty -->
-        <property name="mail.smtp.user" value="endereçodoemail@email.com"/>
+        <property name="mail.smtp.user" value="${APP_MAIL_SESSION_USERNAME}"/>
     </mailSession>
 
 </server>
