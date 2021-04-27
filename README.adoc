@@ -17,8 +17,6 @@ TODO
 
 https://github.com/luisfga/jeebase/tree/wildfly[Branch da versão pro WildFly 23]
 
-https://github.com/luisfga/jeebase/tree/openliberty[Branch da versão pro OpenLiberty21]
-
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
 
 https://github.com/luisfga/jeebase/tree/payara4[Branch da versão pro Payara 4.1.2.x] #JEE7
