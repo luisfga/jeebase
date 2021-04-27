@@ -71,6 +71,6 @@
     
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value> <!-- TODO: parameterize this. -->
+        <param-value>Production</param-value> <!-- TODO: parameterize this. -->
     </context-param>
 </web-app>

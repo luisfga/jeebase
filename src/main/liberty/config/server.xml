@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <!-- Features need by the app from EE stack -->
+        <feature>javaee-8.0</feature>
+    </featureManager>
+
+    <basicRegistry id="basic" realm="BasicRealm"> 
+        <!-- <user name="yourUserName" password="" />  --> 
+    </basicRegistry>
+    
+    <!-- To protect keystore files that have server authentication credentials, define a keystore and assign it a password -->
+    <keyStore id="defaultKeyStore" password="Liberty" />
+    
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <variable name="default.http.port" defaultValue="8080"/>
+    <variable name="default.https.port" defaultValue="8443"/>
+    <httpEndpoint id="defaultHttpEndpoint" httpPort="${default.http.port}" httpsPort="${default.https.port}" host="*"/>
+                  
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Default SSL configuration enables trust for default certificates from the Java runtime --> 
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+
+    <remoteFileAccess>
+        <writeDir>${server.config.dir}</writeDir>
+    </remoteFileAccess>
+	
+    <!-- JDBC DRIVERS (criar pasta '<server_dir>/jdbc' e colocar drivers jdbc lá) -->
+    <library id="jdbcLib">
+        <fileset dir="jdbc" includes="*.jar"/>
+    </library>
+
+    <!-- DATASOURCES (Exemplo pra postgresql. Com esses dados o server já monta a url sozinho)-->
+    <dataSource jndiName="jdbc/jeebaseDS">
+        <jdbcDriver libraryRef="jdbcLib"/>
+        <properties serverName="${DB_HOST}" portNumber="${DB_PORT}"
+                    databaseName="${JEEBASE_DATABASE}"
+                    user="${DB_USER}" password="${DB_PASS}"/>
+    </dataSource>
+	
+    <!-- MAIL SESSIONS (exemplo usando o outlook.com. Falta colocar o endereço e a senha)-->
+    <mailSession>
+        <mailSessionID>jeebaseMailSession</mailSessionID>
+        <jndiName>mail/jeebaseMailSession</jndiName>
+        <description>JEEBase Mail Session</description>
+        <transportProtocol>smtp</transportProtocol>
+        <host>${MAIL_HOST}</host>
+        <user>${MAIL_USER}</user>
+        <password>${MAIL_PASS}</password>
+        <from>LuisFGA JEEBase</from>
+        <property name="mail.smtp.ssl.trust" value="${MAIL_HOST}"/>
+        <property name="mail.smtp.port" value="${MAIL_PORT}" />
+        <property name="mail.smtp.auth" value="true"/>
+        <property name="mail.smtp.starttls.enable" value="true"/>
+        <property name="mail.debug" value="true"/>
+        <!-- redundância do 'user' porque a aplicação utiliza essa forma 'mail.smtp.user' para recuperar esse valor.
+        Mantido assim apenas por portabilidade do código e porque funciona dessa forma no TomEE, WildFly e Payara, menos no openliberty -->
+        <property name="mail.smtp.user" value="${MAIL_USER}"/>
+    </mailSession>
+
+    <!-- Configs from openliberty microprofile guide -->
+    <webApplication location="jeebase.war" contextRoot="/" />
+
+</server>
