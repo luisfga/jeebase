@@ -240,6 +240,8 @@ public class AuthenticationBean {
         } catch (ServletException ex) {
             logger.error("Erro ao fazer logout do usuário -> " + loggingOutUser);
         }
+
+    }
         
         return null; 
     }
