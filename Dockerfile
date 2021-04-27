@@ -13,7 +13,7 @@
 # EXEMPLO resumido de build e deploy do container
 #1. mvn clean package liberty:package -Dinclude=runnable
 #TEST: java -jar target/jeebase.jar --default.http.port=9876 --default.https.port=9877
-#2 docker build -m 500M -f Dockerfile -t luisfga-jeebase:prd . --build-arg MAIL_HOST --build-arg MAIL_PORT --build-arg MAIL_USER --build-arg MAIL_PASS --build-arg JEEBASE_PRD_DB_HOST --build-arg JEEBASE_PRD_DB_PORT --build-arg JEEBASE_PRD_DB_USER --build-arg JEEBASE_PRD_DB_PASS --build-arg JEEBASE_PRD_DATABASE
+#2 docker build -m 400M -f Dockerfile -t luisfga-jeebase:prd . --build-arg MAIL_HOST --build-arg MAIL_PORT --build-arg MAIL_USER --build-arg MAIL_PASS --build-arg JEEBASE_PRD_DB_HOST --build-arg JEEBASE_PRD_DB_PORT --build-arg JEEBASE_PRD_DB_USER --build-arg JEEBASE_PRD_DB_PASS --build-arg JEEBASE_PRD_DATABASE
 #3. docker tag luisfga-jeebase:prd registry.heroku.com/luisfga-jeebase/web
 #4. docker push registry.heroku.com/luisfga-jeebase/web
 #5. heroku container:release web -a luisfga-jeebase
@@ -48,4 +48,4 @@ ENV DB_USER=$JEEBASE_PRD_DB_USER
 ENV DB_PASS=$JEEBASE_PRD_DB_PASS
 ENV JEEBASE_DATABASE=$JEEBASE_PRD_DATABASE
 
-CMD java -Xms64M -Xmx128M -Xss8M -XX:MaxRAM=128M -jar /app/jeebase.jar --default.http.port=$PORT --default.https.port=8443
+CMD java -Xms64M -Xmx128M -Xss4M -XX:MaxRAM=128M -jar /app/jeebase.jar --default.http.port=$PORT --default.https.port=8443
