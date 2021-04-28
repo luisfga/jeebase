@@ -13,11 +13,12 @@
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         
-        <properties>
+        <!-- Mantido apenas para documentação. Em produção, aumenta bastante o tempo de boot. -->
+<!--        <properties>
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
             <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>
-        </properties>
+        </properties>-->
         
     </persistence-unit>
     

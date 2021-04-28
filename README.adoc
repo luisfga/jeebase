@@ -2,22 +2,31 @@
 
 CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, SecurityAPI, Javascript, CSS.
 
-- Precisa de uma datasource chamada 'jdbc/jeebaseDS'
-- Precisa de uma mail session chamada 'mail/jeebaseMailSession'
-- https://github.com/luisfga/jeebase/blob/openliberty/docs/openliberty-template-server.xml[Template do server.xml]
-- tudo deve funcionar caso utilize o template acima e configure as variáveis de ambiente:
-    DB_HOST, DB_PORT, DB_USER, DB_PASS, JEEBASE_DATABASE, 
-    APP_MAIL_SESSION_HOST, APP_MAIL_SESSION_PORT, APP_MAIL_SESSION_USERNAME e APP_MAIL_SESSION_PASSWORD
+- Os recursos necessários( 'jdbc/jeebaseDS' e 'mail/jeebaseMailSession' ) estão configurados no https://github.com/luisfga/jeebase/src/main/liberty/config/server.xml[server.xml],
+usado pelo plugin para executar o servidor e a aplicação.
+- É necessário configurar o plugin com a sua instalação do Open Liberty, alterando o pom.xml
+
+    e.g., <installDirectory>/home/luisfga/openliberty-21.0.0.4</installDirectory>
+
+- É necessário configurar as seguintes variáveis de ambiente:
+    para o banco: DB_HOST, DB_PORT, DB_USER, DB_PASS, JEEBASE_DATABASE, 
+    para a sessão de email: MAIL_HOST, MAIL_PORT, MAIL_USERNAME e MAIL_PASSWORD
+
+- https://github.com/luisfga/jeebase/Dockerfile[Dockerfile]
 
 
-Para gerar um jar executável
+Para gerar um jar e executá-lo
 ----
-TODO
+mvn clean package liberty:package -Dinclude=runnable
+java -jar target/jeebase.jar
+----
+
+Passando argumentos pro jar
+----
+java -jar tager/jeebase.jar --variavel=valor
 ----
 
 https://github.com/luisfga/jeebase/tree/wildfly[Branch da versão pro WildFly 23]
-
-https://github.com/luisfga/jeebase/tree/openliberty[Branch da versão pro OpenLiberty21]
 
 https://github.com/luisfga/jeebase/tree/tomee[Branch da versão pro TomEE 8.0.6]
 

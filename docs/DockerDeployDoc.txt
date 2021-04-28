@@ -1,23 +1,25 @@
-#RESUMO do processo inteiro
-1. mvn clean install tomee:exec
-2. docker build -f Dockerfile -t luisfga-jeebase:prd . --build-arg APP_MAIL_SESSION_HOST --build-arg APP_MAIL_SESSION_PORT --build-arg APP_MAIL_SESSION_USERNAME --build-arg APP_MAIL_SESSION_PASSWORD
-3. docker tag luisfga-jeebase:prd registry.heroku.com/luisfga-jeebase/web
-4. docker push registry.heroku.com/luisfga-jeebase/web
-5. heroku container:release web -a luisfga-jeebase
+# EXEMPLO resumido de build e deploy do container
+#1. mvn clean package liberty:package -Dinclude=runnable
+#TEST: java -jar target/jeebase.jar --default.http.port=9876 --default.https.port=9877
+#2 docker build -m 500M -f Dockerfile -t luisfga-jeebase:prd . --build-arg MAIL_HOST --build-arg MAIL_PORT --build-arg MAIL_USER --build-arg MAIL_PASS --build-arg JEEBASE_PRD_DB_HOST --build-arg JEEBASE_PRD_DB_PORT --build-arg JEEBASE_PRD_DB_USER --build-arg JEEBASE_PRD_DB_PASS --build-arg JEEBASE_PRD_DATABASE
+#3. docker tag luisfga-jeebase:prd registry.heroku.com/luisfga-jeebase/web
+#4. docker push registry.heroku.com/luisfga-jeebase/web
+#5. heroku container:release web -a luisfga-jeebase
 
-#TIPS
-# não esquecer de -> mvn clean package
+#RUNNING
+# docker run --name luisfga-jeebase -e PORT=8080 -p 8080:8080 luisfga-jeebase:prd 
 
-#DOCKER TIPS
-# Excluir 'dangling' containers -> docker rmi $(docker images --filter "dangling=true" -q)
+#STOPPING
+# docker stop luisfga-jeebase && docker rm luisfga-jeebase 
 
-# Build command DEV  -> docker build -f Dockerfile.dev -t luisfga-jeebase:dev . --build-arg APP_MAIL_SESSION_HOST --build-arg APP_MAIL_SESSION_PORT --build-arg APP_MAIL_SESSION_USERNAME --build-arg APP_MAIL_SESSION_PASSWORD
+# Excluir 'dangling' containers
+# docker rmi -f $(docker images --filter "dangling=true" -q)
 
-# Run command (DEV) -> docker run --add-host=host:192.168.0.3 -p 8080:8080 luisfga-jeebase:dev
+# Listar containeres em execução
+# docker ps
 
-# Listar containeres em execução -> docker ps
-
-# Acessar bash dentro de um container que esteja rodando -> docker exec -it <containerID> /bin/bash
+# Acessar bash dentro de um container que esteja rodando
+# docker exec -it <containerID> /bin/bash
 
 # inspecionar o exit code de um container que não estartou
 # a qualquer momento -> docker inspect <container-id> --format='{{.State.ExitCode}}'
@@ -25,16 +27,3 @@
 
 #HEROKU TIPS
 #https://devcenter.heroku.com/articles/container-registry-and-runtime#building-and-pushing-image-s
-
-#para buildar, fazer o push e depois release
-#build + push -> heroku container:push web -a luisfga-jeebase
-#release -> heroku container:release web -a luisfga-jeebase
-
-# para fazer o push de uma imagem existente
-# 1. é preciso marcar o container pra upload
-# -> docker tag <image> registry.heroku.com/<app>/<process-type>
-# por exemplo -> docker tag luisfga-jeebase:prd registry.heroku.com/luisfga-jeebase/web
-# 2. em seguida, push da imagem 'tagueada'
-# -> docker push registry.heroku.com/<app>/<process-type>
-# por exemplo -> docker push registry.heroku.com/luisfga-jeebase/web
-# 3. depois, release normal -> heroku container:release web -a luisfga-jeebase
