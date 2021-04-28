@@ -1,6 +1,6 @@
 ## JEEBase (OpenLiberty Version) 
 
-CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, SecurityAPI, Javascript, CSS.
+JEE8, CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-lite, Deltaspike, SecurityAPI, Javascript, CSS.
 
 - Os recursos necessários( 'jdbc/jeebaseDS' e 'mail/jeebaseMailSession' ) estão configurados no https://github.com/luisfga/jeebase/blob/master/src/main/liberty/config/server.xml[server.xml],
 usado pelo plugin para executar o servidor e a aplicação.
