@@ -4,17 +4,22 @@ CDI, JPA (EclispLink), JSF (+custom component taglib), Omnifaces, JAX-RS, EJB-li
 
 - Os recursos necessários( 'jdbc/jeebaseDS' e 'mail/jeebaseMailSession' ) estão configurados no https://github.com/luisfga/jeebase/blob/master/src/main/liberty/config/server.xml[server.xml],
 usado pelo plugin para executar o servidor e a aplicação.
-- É necessário configurar o plugin com a sua instalação do Open Liberty, alterando o pom.xml
+- É necessário configurar o plugin no pom.xml com a sua instalação do Open Liberty alterando o pom.xml,e.g.,
 
-    e.g., <installDirectory>/home/luisfga/openliberty-21.0.0.4</installDirectory>
+    <configuration>
+        <installDirectory>/home/luisfga/openliberty-21.0.0.4</installDirectory>
+        <serverName>jeebase</serverName>
+    </configuration>
 
 - É necessário configurar as seguintes variáveis de ambiente:
+
     para o banco: DB_HOST, DB_PORT, DB_USER, DB_PASS, JEEBASE_DATABASE, 
+
     para a sessão de email: MAIL_HOST, MAIL_PORT, MAIL_USERNAME e MAIL_PASSWORD
 
 - https://github.com/luisfga/jeebase/blob/master/Dockerfile[Dockerfile]
 
-#### Maven
+### Maven
 Executar o servidor com a aplicação
 ----
 mvn liberty:run
@@ -34,6 +39,8 @@ Passando argumentos pro jar
 ----
 java -jar tager/jeebase.jar --variavel=valor
 ----
+
+### Branches
 
 https://github.com/luisfga/jeebase/tree/wildfly[Branch da versão pro WildFly 23]
 
