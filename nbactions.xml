@@ -2,42 +2,37 @@
 <actions>
     <action>
         <actionName>CUSTOM-mvn clean package</actionName>
-        <displayName>mvn clean package</displayName>
+        <displayName>CleanAndPackage</displayName>
         <goals>
             <goal>clean</goal>
             <goal>package</goal>
         </goals>
     </action>
     <action>
-        <actionName>CUSTOM-mvn wildfly-jar:dev-watch -Pdebug</actionName>
-        <displayName>wildfly-jar dev WATCH DEBUG</displayName>
-            <goals>
-            <goal>wildfly-jar:dev-watch</goal>
-            </goals>
-        <activatedProfiles>
-            <activatedProfile>debug</activatedProfile>
-        </activatedProfiles>
-        </action>
+        <actionName>CUSTOM-mvn Start DEV</actionName>
+        <displayName>StartDEV</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal>
+            <goal>libert:dev</goal>
+        </goals>
+    </action>
     <action>
-        <actionName>CUSTOM-mvn clean package -Pbootable-jar</actionName>
+        <actionName>CUSTOM-mvn DEPLOY</actionName>
+        <displayName>Deploy</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal>
+            <goal>liberty:deploy</goal>
+        </goals>
+    </action>
+    <action>
+        <actionName>CUSTOM-mvn Make Runnable JAR</actionName>
         <displayName>BOOTABLE JAR</displayName>
         <goals>
             <goal>clean</goal>
             <goal>package</goal>
+            <goal>liberty:package</goal>
         </goals>
-        <activatedProfiles>
-            <activatedProfile>bootable-jar</activatedProfile>
-        </activatedProfiles>
-    </action>
-    <action>
-        <actionName>CUSTOM-mvn clean package -Plate-setup-bootable-jar</actionName>
-        <displayName>LATE SETUP Bootable Jar</displayName>
-        <goals>
-            <goal>clean</goal>
-            <goal>package</goal>
-        </goals>
-        <activatedProfiles>
-            <activatedProfile>late-setup-bootable-jar</activatedProfile>
-        </activatedProfiles>
     </action>
 </actions>
