@@ -14,11 +14,20 @@ usado pelo plugin para executar o servidor e a aplicação.
 
 - https://github.com/luisfga/jeebase/blob/master/Dockerfile[Dockerfile]
 
+#### Maven
+Executar o servidor com a aplicação
+----
+mvn liberty:run
+----
 
-Para gerar um jar e executá-lo
+Executar no modo DEV (hot deploy e debug ativado)
+----
+mvn liberty:dev
+----
+
+Gerar um jar executável
 ----
 mvn clean package liberty:package -Dinclude=runnable
-java -jar target/jeebase.jar
 ----
 
 Passando argumentos pro jar
