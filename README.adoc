@@ -15,7 +15,7 @@ usado pelo plugin para executar o servidor e a aplicação.
 
     para o banco: DB_HOST, DB_PORT, DB_USER, DB_PASS, JEEBASE_DATABASE, 
 
-    para a sessão de email: MAIL_HOST, MAIL_PORT, MAIL_USERNAME e MAIL_PASSWORD
+    para a sessão de email: MAIL_HOST, MAIL_PORT, MAIL_USER e MAIL_PASS
 
 - https://github.com/luisfga/jeebase/blob/master/Dockerfile[Dockerfile]
 
